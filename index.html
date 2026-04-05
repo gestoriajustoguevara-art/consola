@@ -534,7 +534,7 @@ async function cargarTodo() {
     const items = rows
       .filter(r => (r.estado||'').toLowerCase() !== 'completado')
       .map(r => ({ ...r, dias: diasHasta(r.fecha) }))
-      .filter(r => r.dias !== null && r.dias >= -30 && r.dias <= 90)
+      .filter(r => r.dias !== null && r.dias >= -6 && r.dias <= 90)
       .sort((a,b) => a.dias - b.dias);
 
     // Stats
