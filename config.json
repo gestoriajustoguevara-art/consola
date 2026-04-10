@@ -1,0 +1,48 @@
+{
+  "_info": "Configuración central — Gestoría Justo Guevara",
+  "_actualizado": "2026-04-10",
+  "_instrucciones": "Edita este archivo en GitHub (repositorio: consola) para cambiar cualquier URL sin tocar las apps",
+
+  "clientesMaestro": {
+    "sheetsId": "1dAHDriePeFpS5H3YUBJpDG1jo4oqIrH7z-LyakBoTvs",
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbyVXypuTXm5tRvbP-xJu06q7ZsJ2qve790lCyvBLJpr6jTckZhc6wZ4kX5XPhVOWCVrww/exec"
+  },
+
+  "vencimientos": {
+    "sheetsId": "1tq9A2XZSmMivbrGlcLWWkAhw4QRbZkWQadI8K-0fmXo",
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbzSpWjKLGxRp4CR4miJk4uP7b6CNmmToqGrleJXbEtQX9T6BdRyLkMReE5lBGxVk5i9SA/exec"
+  },
+
+  "cajaContable": {
+    "sheetsId": "1hMKB92LlfPNSWackA1zGto0-LY6o3sg5uG-FTgfTP-E",
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbw8EDsMuiZfmA-M5lDI9rLtY1RHnTX906GVgkigo6NQdNCM1sB1mvm0iVP5Zt-MQ0hx/exec"
+  },
+
+  "juridico": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbyGPq-csma39kPzB92AV7iYXdEKTai8tgxCVrxWoNFvEmABeSLGNWWCJCtyC2nbBsk4/exec"
+  },
+
+  "lectorDni": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbxe0xdskhFR_Yqbp-__XS_NVVL5zlhMTH0HvJVFbxyRDfVRqGaKK2M7waXR8fX-_Dpk9w/exec"
+  },
+
+  "seguimientoQR": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbxVGIdVaZiVhegCQhTyhFPz43qHxstLR-DrcLD2ABFjYFS6S41otuKh2IcP4feUOuDi/exec"
+  },
+
+  "extranjeria": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbyL9Cxa6nEgOEa0aE0I8qCCBlXZZerW8ciTn6ctoVP3Ksvshz_SKsVTZu-qOKuRRUfX0w/exec"
+  },
+
+  "fiscal": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbxTGp2upngE7Gh1jm0bgeFg2poxz8tkVhA9ApTYr5AHHJI4McqmEz4AE0rCdGNquhmHjA/exec"
+  },
+
+  "escrituras": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbxRw0ZqbmywaZB9PtVJqntgE1u0KRde_2UNjkKJa45q-bJm-Add7LWJrr35-xCPRJQJ/exec"
+  },
+
+  "trafico": {
+    "scriptUrl": "https://script.google.com/macros/s/AKfycbyI-zUIYhcILkeL23tH8JXr4SHNYvKXZES0TYWyJ2rcmcCWLlt3phu1DSV07JWy7xRV/exec"
+  }
+}
