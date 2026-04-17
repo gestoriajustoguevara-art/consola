@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ð Caja de Renombradores Â· Mari</title>
+<title>🗂 Caja de Renombradores · Mari</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <style>
@@ -15,7 +15,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;}
 
-/* ââ HEADER ââ */
+/* ── HEADER ── */
 .app-header{
   background:var(--navy);
   padding:0 32px;
@@ -31,7 +31,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 }
 .header-logo span{display:block;font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:300;color:#aab;letter-spacing:.08em;text-transform:uppercase;margin-top:2px;}
 
-/* ââ TABS ââ */
+/* ── TABS ── */
 .tabs{display:flex;align-items:stretch;gap:0;flex:1;overflow-x:auto;}
 .tab-btn{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -46,7 +46,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .tab-btn:hover{background:rgba(255,255,255,.07);color:var(--gold-light);}
 .tab-btn.active{color:var(--gold-light);border-bottom-color:var(--gold);background:rgba(255,255,255,.05);}
 
-/* ââ PANEL IA (barra superior fija) ââ */
+/* ── PANEL IA (barra superior fija) ── */
 .ia-topbar{
   background:white;border-bottom:1px solid var(--light-gray);
   padding:8px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
@@ -64,24 +64,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .cfg-select,.cfg-input{border:1px solid var(--light-gray);border-radius:5px;padding:5px 8px;font-size:.8rem;font-family:'DM Sans',sans-serif;color:var(--navy);background:white;width:100%;}
 .cfg-note{font-size:.72rem;color:var(--gray);margin-top:6px;}
 
-/* ââ CONTENIDO ââ */
+/* ── CONTENIDO ── */
 .tab-content{display:none;} 
 .tab-content.active{display:block;}
 .main{max-width:960px;margin:0 auto;padding:28px 24px;}
 
-/* ââ INTRO PILL ââ */
+/* ── INTRO PILL ── */
 .intro{background:white;border:1px solid var(--light-gray);border-left:4px solid var(--gold);border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.86rem;color:var(--gray);line-height:1.7;}
 .intro strong{color:var(--navy);}
 .intro code{background:#f0eee8;padding:1px 5px;border-radius:3px;font-size:.8rem;color:var(--navy);}
 
-/* ââ DROPZONE ââ */
+/* ── DROPZONE ── */
 .dropzone{border:2.5px dashed var(--gold);border-radius:12px;background:white;padding:36px 24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:20px;}
 .dropzone:hover,.dropzone.dragover{background:#fffbee;border-color:var(--navy);}
 .dropzone .icon{font-size:2.5rem;margin-bottom:8px;}
 .dropzone h2{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy);margin-bottom:4px;}
 .dropzone p{font-size:.81rem;color:var(--gray);}
 
-/* ââ TABLE ââ */
+/* ── TABLE ── */
 .table-wrap{background:white;border:1px solid var(--light-gray);border-radius:12px;overflow:hidden;margin-bottom:18px;}
 .table-header{background:var(--navy);color:var(--gold-light);padding:10px 18px;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px;}
 .table-header .count{background:var(--gold);color:var(--navy);border-radius:20px;padding:1px 8px;font-size:.68rem;font-weight:700;}
@@ -120,13 +120,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .spinner{display:inline-block;width:13px;height:13px;border:2px solid #ddd;border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ââ MODO TABS (DNI) ââ */
+/* ── MODO TABS (DNI) ── */
 .modo-tabs{display:flex;margin-bottom:18px;border:2px solid var(--navy);border-radius:8px;overflow:hidden;}
 .modo-tab{flex:1;padding:10px 14px;text-align:center;cursor:pointer;font-size:.82rem;font-weight:600;background:white;color:var(--navy);border:none;border-right:2px solid var(--navy);transition:all .18s;font-family:'DM Sans',sans-serif;}
 .modo-tab:last-child{border-right:none;}
 .modo-tab.active{background:var(--navy);color:var(--gold-light);}
 
-/* ââ PARES DNI ââ */
+/* ── PARES DNI ── */
 .pairs-area{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;}
 .pair-card{background:white;border:1px solid var(--light-gray);border-radius:12px;overflow:hidden;}
 .pair-card-header{background:#f5f2ea;padding:9px 14px;font-size:.76rem;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--light-gray);}
@@ -144,12 +144,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .btn-add-pair{width:100%;padding:10px;border:2px dashed var(--gold);border-radius:10px;background:white;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:18px;}
 .btn-add-pair:hover{background:#fffbee;border-color:var(--navy);color:var(--navy);}
 
-/* ââ ESCRITURAS grid ââ */
+/* ── ESCRITURAS grid ── */
 .fields-grid{display:grid;grid-template-columns:120px 76px 1fr 1fr;gap:8px;}
 .tipo-custom{margin-top:3px;display:none;}
 .tipo-custom.visible{display:block;}
 
-/* ââ VEHÃCULOS ââ */
+/* ── VEHÍCULOS ── */
 .matricula-input{font-family:'DM Sans',sans-serif;font-weight:700;font-size:.92rem;letter-spacing:.08em;text-transform:uppercase;text-align:center;border:2px solid var(--light-gray);border-radius:6px;padding:5px 7px;width:100%;background:white;color:var(--navy);transition:border-color .2s;}
 .matricula-input:focus{outline:none;border-color:var(--gold);}
 .matricula-input.auto-filled{border-color:#b8d4c0;background:#f0faf4;}
@@ -160,7 +160,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .fields-row{display:flex;gap:8px;align-items:flex-end;}
 .fields-col{display:flex;flex-direction:column;gap:6px;}
 
-/* ââ TIPOS DNI pills ââ */
+/* ── TIPOS DNI pills ── */
 .tipos-legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px;}
 .tipo-pill{font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:20px;border:1.5px solid;}
 .tipo-DNI{border-color:#2563eb;color:#2563eb;background:#eff6ff;}
@@ -179,69 +179,69 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 <div class="app-header">
   <div class="header-logo">
     Mari
-    <span>ð Caja de Renombradores</span>
+    <span>🗂 Caja de Renombradores</span>
   </div>
   <div class="tabs">
-    <button class="tab-btn active" onclick="setTab(0)" id="tab0"><span class="tab-icon">ð</span>Fiscal / Renta</button>
-    <button class="tab-btn" onclick="setTab(1)" id="tab1"><span class="tab-icon">ðªª</span>DNI Â· NIE Â· Pasaporte</button>
-    <button class="tab-btn" onclick="setTab(2)" id="tab2"><span class="tab-icon">ð</span>Escrituras</button>
-    <button class="tab-btn" onclick="setTab(3)" id="tab3"><span class="tab-icon">ð</span>Fichas Â· Permisos</button>
+    <button class="tab-btn active" onclick="setTab(0)" id="tab0"><span class="tab-icon">📂</span>Fiscal / Renta</button>
+    <button class="tab-btn" onclick="setTab(1)" id="tab1"><span class="tab-icon">🪪</span>DNI · NIE · Pasaporte</button>
+    <button class="tab-btn" onclick="setTab(2)" id="tab2"><span class="tab-icon">📜</span>Escrituras</button>
+    <button class="tab-btn" onclick="setTab(3)" id="tab3"><span class="tab-icon">🚗</span>Fichas · Permisos</button>
   </div>
 </div>
 
 <!-- BARRA IA -->
 <div class="ia-topbar">
-  <span id="iaBadge" class="ia-badge warn">â ï¸ Sin clave API</span>
-  <button class="btn-cfg" onclick="toggleCfg()">âï¸ Configurar IA</button>
-  <span style="font-size:.72rem;color:var(--gray)">Gemini = gratis Â· Claude = de pago</span>
+  <span id="iaBadge" class="ia-badge warn">⚠️ Sin clave API</span>
+  <button class="btn-cfg" onclick="toggleCfg()">⚙️ Configurar IA</button>
+  <span style="font-size:.72rem;color:var(--gray)">Gemini = gratis · Claude = de pago</span>
 </div>
 <div class="cfg-panel" id="cfgPanel">
   <div class="cfg-row">
     <div class="cfg-group"><label class="cfg-label">IA a usar</label>
       <select id="cfgProveedor" class="cfg-select" onchange="onCfgChange()">
-        <option value="gemini">ð¢ Gemini (gratuito)</option>
-        <option value="claude">ðµ Claude (de pago)</option>
+        <option value="gemini">🟢 Gemini (gratuito)</option>
+        <option value="claude">🔵 Claude (de pago)</option>
       </select>
     </div>
-    <div class="cfg-group" style="flex:2"><label class="cfg-label">Clave Gemini â aistudio.google.com</label>
+    <div class="cfg-group" style="flex:2"><label class="cfg-label">Clave Gemini — aistudio.google.com</label>
       <input type="password" id="cfgGemini" class="cfg-input" placeholder="AIza..." oninput="onCfgChange()">
     </div>
-    <div class="cfg-group" style="flex:2"><label class="cfg-label">Clave Claude â console.anthropic.com</label>
+    <div class="cfg-group" style="flex:2"><label class="cfg-label">Clave Claude — console.anthropic.com</label>
       <input type="password" id="cfgClaude" class="cfg-input" placeholder="sk-ant-..." oninput="onCfgChange()">
     </div>
   </div>
-  <div class="cfg-note">ð Las claves se guardan solo en este navegador, nunca salen de tu ordenador.</div>
+  <div class="cfg-note">🔒 Las claves se guardan solo en este navegador, nunca salen de tu ordenador.</div>
 </div>
 
-<!-- âââââââââââââââ TAB FISCAL âââââââââââââââ -->
+<!-- ═══════════════ TAB FISCAL ═══════════════ -->
 <div class="tab-content active" id="content0">
 <div class="main">
   <div class="intro"><strong>Datos fiscales y declaraciones de renta.</strong><br>
-    ð Datos fiscales â <code>DF_GARCIA LOPEZ, Maria Â· RUIZ, Juan_R2025.pdf</code><br>
-    ð DeclaraciÃ³n â <code>Renta 2025_GARCIA LOPEZ, Maria Â· RUIZ, Juan.pdf</code>
+    📄 Datos fiscales → <code>DF_GARCIA LOPEZ, Maria · RUIZ, Juan_R2025.pdf</code><br>
+    📋 Declaración → <code>Renta 2025_GARCIA LOPEZ, Maria · RUIZ, Juan.pdf</code>
   </div>
   <div class="dropzone" id="dz0" onclick="document.getElementById('fi0').click()">
-    <div class="icon">ð</div><h2>Arrastra los PDFs aquÃ­</h2>
-    <p>Datos fiscales y declaraciones Â· Puedes mezclarlos</p>
+    <div class="icon">📂</div><h2>Arrastra los PDFs aquí</h2>
+    <p>Datos fiscales y declaraciones · Puedes mezclarlos</p>
     <input type="file" id="fi0" accept=".pdf" multiple>
   </div>
   <div id="sec0" style="display:none">
-    <div class="section-title">ð Archivos cargados
-      <button class="btn btn-danger" onclick="clearF()" style="margin-left:auto">ð Limpiar</button>
+    <div class="section-title">📋 Archivos cargados
+      <button class="btn btn-danger" onclick="clearF()" style="margin-left:auto">🗑 Limpiar</button>
     </div>
     <div class="table-wrap">
       <div class="table-header"><span>Documentos</span><span class="count" id="cnt0">0</span></div>
       <div id="list0"></div>
     </div>
     <div class="actions-bar">
-      <button class="btn btn-primary" id="btnF" onclick="analizarTodosF()">ð¤ Analizar todos con IA</button>
-      <button class="btn btn-secondary" onclick="descargarF()">â¬ï¸ Descargar renombrados</button>
+      <button class="btn btn-primary" id="btnF" onclick="analizarTodosF()">🤖 Analizar todos con IA</button>
+      <button class="btn btn-secondary" onclick="descargarF()">⬇️ Descargar renombrados</button>
     </div>
   </div>
 </div>
 </div>
 
-<!-- âââââââââââââââ TAB IDENTIDAD âââââââââââââââ -->
+<!-- ═══════════════ TAB IDENTIDAD ═══════════════ -->
 <div class="tab-content" id="content1">
 <div class="main">
   <div class="intro"><strong>DNI, NIE, TIE y Pasaportes.</strong>
@@ -253,94 +253,94 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
     </div>
   </div>
   <div class="modo-tabs">
-    <button class="modo-tab active" onclick="setModoI('simple')" id="itab-simple">ð Una cara por PDF</button>
-    <button class="modo-tab" onclick="setModoI('doble')" id="itab-doble">ð Dos PDFs â unir en uno</button>
+    <button class="modo-tab active" onclick="setModoI('simple')" id="itab-simple">📄 Una cara por PDF</button>
+    <button class="modo-tab" onclick="setModoI('doble')" id="itab-doble">🔀 Dos PDFs → unir en uno</button>
   </div>
   <div id="modoISimple">
     <div class="dropzone" id="dz1" onclick="document.getElementById('fi1').click()">
-      <div class="icon">ðªª</div><h2>Arrastra los PDFs aquÃ­</h2>
-      <p>DNIs, NIEs, TIEs y Pasaportes Â· Puedes mezclarlos</p>
+      <div class="icon">🪪</div><h2>Arrastra los PDFs aquí</h2>
+      <p>DNIs, NIEs, TIEs y Pasaportes · Puedes mezclarlos</p>
       <input type="file" id="fi1" accept=".pdf" multiple>
     </div>
     <div id="sec1" style="display:none">
-      <div class="section-title">ðªª Documentos cargados
-        <button class="btn btn-danger" onclick="clearIS()" style="margin-left:auto">ð Limpiar</button>
+      <div class="section-title">🪪 Documentos cargados
+        <button class="btn btn-danger" onclick="clearIS()" style="margin-left:auto">🗑 Limpiar</button>
       </div>
       <div class="table-wrap">
         <div class="table-header"><span>Documentos</span><span class="count" id="cnt1">0</span></div>
         <div id="list1"></div>
       </div>
       <div class="actions-bar">
-        <button class="btn btn-primary" id="btnIS" onclick="analizarTodosIS()">ð¤ Analizar todos con IA</button>
-        <button class="btn btn-secondary" onclick="descargarIS()">â¬ï¸ Descargar renombrados</button>
+        <button class="btn btn-primary" id="btnIS" onclick="analizarTodosIS()">🤖 Analizar todos con IA</button>
+        <button class="btn btn-secondary" onclick="descargarIS()">⬇️ Descargar renombrados</button>
       </div>
     </div>
   </div>
   <div id="modoIDoble" style="display:none">
     <div class="pairs-area" id="pairsArea"></div>
-    <button class="btn-add-pair" onclick="agregarPar()">ï¼ AÃ±adir documento (cara A + cara B)</button>
+    <button class="btn-add-pair" onclick="agregarPar()">＋ Añadir documento (cara A + cara B)</button>
     <div id="dobleAcc" style="display:none">
       <div class="actions-bar">
-        <button class="btn btn-primary" id="btnID" onclick="analizarTodosID()">ð¤ Analizar todos con IA</button>
-        <button class="btn btn-secondary" onclick="descargarID()">â¬ï¸ Unir caras y descargar</button>
+        <button class="btn btn-primary" id="btnID" onclick="analizarTodosID()">🤖 Analizar todos con IA</button>
+        <button class="btn btn-secondary" onclick="descargarID()">⬇️ Unir caras y descargar</button>
       </div>
     </div>
   </div>
 </div>
 </div>
 
-<!-- âââââââââââââââ TAB ESCRITURAS âââââââââââââââ -->
+<!-- ═══════════════ TAB ESCRITURAS ═══════════════ -->
 <div class="tab-content" id="content2">
 <div class="main">
   <div class="intro"><strong>Escrituras notariales.</strong><br>
     Formato: <code>12345_2025_Compraventa_Garcia Lopez Maria.pdf</code>
   </div>
   <div class="dropzone" id="dz2" onclick="document.getElementById('fi2').click()">
-    <div class="icon">ð</div><h2>Arrastra las escrituras aquÃ­</h2>
+    <div class="icon">📜</div><h2>Arrastra las escrituras aquí</h2>
     <p>PDFs escaneados de escrituras notariales</p>
     <input type="file" id="fi2" accept=".pdf" multiple>
   </div>
   <div id="sec2" style="display:none">
-    <div class="section-title">ð Escrituras cargadas
-      <button class="btn btn-danger" onclick="clearE()" style="margin-left:auto">ð Limpiar</button>
+    <div class="section-title">📜 Escrituras cargadas
+      <button class="btn btn-danger" onclick="clearE()" style="margin-left:auto">🗑 Limpiar</button>
     </div>
     <div class="table-wrap">
       <div class="table-header"><span>Documentos</span><span class="count" id="cnt2">0</span></div>
       <div id="list2"></div>
     </div>
     <div class="actions-bar">
-      <button class="btn btn-primary" id="btnE" onclick="analizarTodosE()">ð¤ Analizar todos con IA</button>
-      <button class="btn btn-secondary" onclick="descargarE()">â¬ï¸ Descargar renombrados</button>
+      <button class="btn btn-primary" id="btnE" onclick="analizarTodosE()">🤖 Analizar todos con IA</button>
+      <button class="btn btn-secondary" onclick="descargarE()">⬇️ Descargar renombrados</button>
     </div>
   </div>
 </div>
 </div>
 
-<!-- âââââââââââââââ TAB VEHÃCULOS âââââââââââââââ -->
+<!-- ═══════════════ TAB VEHÍCULOS ═══════════════ -->
 <div class="tab-content" id="content3">
 <div class="main">
-  <div class="intro"><strong>Fichas tÃ©cnicas y permisos de circulaciÃ³n.</strong>
+  <div class="intro"><strong>Fichas técnicas y permisos de circulación.</strong>
     <div class="tipos-legend">
-      <span class="tipo-pill pill-ft">ð FT â 1234ABC_FT-Seat Ibiza.pdf</span>
-      <span class="tipo-pill pill-pc">ð PC â 1234ABC_PC-Garcia Lopez Maria.pdf</span>
+      <span class="tipo-pill pill-ft">📋 FT → 1234ABC_FT-Seat Ibiza.pdf</span>
+      <span class="tipo-pill pill-pc">🚗 PC → 1234ABC_PC-Garcia Lopez Maria.pdf</span>
     </div>
   </div>
   <div class="dropzone" id="dz3" onclick="document.getElementById('fi3').click()">
-    <div class="icon">ð</div><h2>Arrastra los PDFs aquÃ­</h2>
-    <p>Fichas tÃ©cnicas y permisos de circulaciÃ³n Â· Puedes mezclarlos</p>
+    <div class="icon">🚗</div><h2>Arrastra los PDFs aquí</h2>
+    <p>Fichas técnicas y permisos de circulación · Puedes mezclarlos</p>
     <input type="file" id="fi3" accept=".pdf" multiple>
   </div>
   <div id="sec3" style="display:none">
-    <div class="section-title">ð Documentos cargados
-      <button class="btn btn-danger" onclick="clearV()" style="margin-left:auto">ð Limpiar</button>
+    <div class="section-title">🚗 Documentos cargados
+      <button class="btn btn-danger" onclick="clearV()" style="margin-left:auto">🗑 Limpiar</button>
     </div>
     <div class="table-wrap">
-      <div class="table-header"><span>Documentos de vehÃ­culos</span><span class="count" id="cnt3">0</span></div>
+      <div class="table-header"><span>Documentos de vehículos</span><span class="count" id="cnt3">0</span></div>
       <div id="list3"></div>
     </div>
     <div class="actions-bar">
-      <button class="btn btn-primary" id="btnV" onclick="analizarTodosV()">ð¤ Analizar todos con IA</button>
-      <button class="btn btn-secondary" onclick="descargarV()">â¬ï¸ Descargar renombrados</button>
+      <button class="btn btn-primary" id="btnV" onclick="analizarTodosV()">🤖 Analizar todos con IA</button>
+      <button class="btn btn-secondary" onclick="descargarV()">⬇️ Descargar renombrados</button>
     </div>
   </div>
 </div>
@@ -349,9 +349,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 <input type="file" id="slotInput" accept=".pdf">
 
 <script>
-// âââââââââââââââââââââââââââââââââââââââ
-// NAVEGACIÃN PESTAÃAS
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
+// NAVEGACIÓN PESTAÑAS
+// ═══════════════════════════════════════
 function setTab(n) {
   for(let i=0;i<4;i++){
     document.getElementById('tab'+i).classList.toggle('active',i===n);
@@ -359,9 +359,9 @@ function setTab(n) {
   }
 }
 
-// âââââââââââââââââââââââââââââââââââââââ
-// MÃDULO IA COMPARTIDO
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
+// MÓDULO IA COMPARTIDO
+// ═══════════════════════════════════════
 let cfg;
 try{cfg = JSON.parse(localStorage.getItem('gestoria_ia_cfg')||'{"proveedor":"gemini","gemini":"","claude":""}');}
 catch(e){cfg={proveedor:'gemini',gemini:'',claude:''};}
@@ -378,8 +378,8 @@ function renderCfgPanel(){
 function updateBadge(){
   const clave=cfg.proveedor==='gemini'?cfg.gemini:cfg.claude;
   const b=document.getElementById('iaBadge');
-  if(clave){b.textContent=cfg.proveedor==='gemini'?'â Gemini activo':'â Claude activo';b.className='ia-badge ok';}
-  else{b.textContent='â ï¸ Sin clave API';b.className='ia-badge warn';}
+  if(clave){b.textContent=cfg.proveedor==='gemini'?'✅ Gemini activo':'✅ Claude activo';b.className='ia-badge ok';}
+  else{b.textContent='⚠️ Sin clave API';b.className='ia-badge warn';}
 }
 
 function onCfgChange(){
@@ -400,7 +400,7 @@ async function llamarIA(file,sys,usr){
 }
 
 async function iaGemini(b64,sys,usr){
-  if(!cfg.gemini)throw new Error('Falta la clave Gemini. Pulsa âï¸ Configurar IA.');
+  if(!cfg.gemini)throw new Error('Falta la clave Gemini. Pulsa ⚙️ Configurar IA.');
   const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+cfg.gemini,{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:[{role:'user',parts:[{inline_data:{mime_type:'application/pdf',data:b64}},{text:usr}]}],generationConfig:{temperature:0.1,maxOutputTokens:600}})
@@ -411,7 +411,7 @@ async function iaGemini(b64,sys,usr){
 }
 
 async function iaClaude(b64,sys,usr){
-  if(!cfg.claude)throw new Error('Falta la clave Claude. Pulsa âï¸ Configurar IA.');
+  if(!cfg.claude)throw new Error('Falta la clave Claude. Pulsa ⚙️ Configurar IA.');
   const r=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':cfg.claude,'anthropic-version':'2023-06-01'},
@@ -426,20 +426,20 @@ function toBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.o
 function toArrayBuffer(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsArrayBuffer(f);});}
 function uid(){return 'f'+Date.now()+Math.random().toString(36).slice(2);}
 function pausa(ms){return new Promise(r=>setTimeout(r,ms));}
-function badge(s){return({pending:'<span class="status-badge status-pending">â³ Pendiente</span>',analyzing:'<span class="status-badge status-analyzing"><span class="spinner"></span> Analizando...</span>',done:'<span class="status-badge status-done">â Listo</span>',error:'<span class="status-badge status-error">â Error</span>',renamed:'<span class="status-badge status-renamed">â Descargado</span>'}[s])||'';}
+function badge(s){return({pending:'<span class="status-badge status-pending">⏳ Pendiente</span>',analyzing:'<span class="status-badge status-analyzing"><span class="spinner"></span> Analizando...</span>',done:'<span class="status-badge status-done">✅ Listo</span>',error:'<span class="status-badge status-error">❌ Error</span>',renamed:'<span class="status-badge status-renamed">✔ Descargado</span>'}[s])||'';}
 function dl(file,nombre){return new Promise(r=>{const url=URL.createObjectURL(file);const a=document.createElement('a');a.href=url;a.download=nombre;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>{URL.revokeObjectURL(url);r();},300);});}
 
 document.addEventListener('DOMContentLoaded',()=>renderCfgPanel());
 
 
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
 // FISCAL
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
 const archF=[];
-const SYS_F=`Eres un asistente especializado en documentos fiscales espaÃ±oles.
+const SYS_F=`Eres un asistente especializado en documentos fiscales españoles.
 Analiza el PDF y extrae los nombres. Responde SOLO con JSON sin backticks:
-{"tipo":"df"(datos fiscales/certificado/borrador) o "renta"(declaraciÃ³n IRPF),"titular":"APELLIDO1 APELLIDO2, Nombre","conyuge":"APELLIDO1 APELLIDO2, Nombre" o null}`;
-const USR_F='Extrae titular y cÃ³nyuge de este documento fiscal.';
+{"tipo":"df"(datos fiscales/certificado/borrador) o "renta"(declaración IRPF),"titular":"APELLIDO1 APELLIDO2, Nombre","conyuge":"APELLIDO1 APELLIDO2, Nombre" o null}`;
+const USR_F='Extrae titular y cónyuge de este documento fiscal.';
 
 (()=>{
   const dz=document.getElementById('dz0'),fi=document.getElementById('fi0');
@@ -460,17 +460,17 @@ function renderF(id){
   const div=document.createElement('div');div.className='file-row';div.id='rf_'+id;
   div.innerHTML='<div class="file-original"><span class="fname">'+a.file.name+'</span>'+
     '<select class="field-select" style="margin-top:4px" onchange="sTipoF(\''+id+'\',this.value)">'+
-    '<option value=""'+(a.tipo?'':' selected')+'>â Tipo â</option>'+
-    '<option value="df"'+(a.tipo==='df'?' selected':'')+'>ð Datos Fiscales</option>'+
-    '<option value="renta"'+(a.tipo==='renta'?' selected':'')+'>ð DeclaraciÃ³n Renta</option>'+
+    '<option value=""'+(a.tipo?'':' selected')+'>— Tipo —</option>'+
+    '<option value="df"'+(a.tipo==='df'?' selected':'')+'>📄 Datos Fiscales</option>'+
+    '<option value="renta"'+(a.tipo==='renta'?' selected':'')+'>📋 Declaración Renta</option>'+
     '</select></div>'+
     '<div><div class="field-group"><span class="field-label">Titular</span>'+
     '<input type="text" class="field-input'+(a.titular?' auto-filled':'')+'" placeholder="GARCIA LOPEZ, Maria" value="'+a.titular+'" oninput="sFld(archF,\''+id+'\',\'titular\',this.value,gNomF,\'rf_\')"></div>'+
-    '<div class="field-group" style="margin-top:4px"><span class="field-label">CÃ³nyuge (opcional)</span>'+
+    '<div class="field-group" style="margin-top:4px"><span class="field-label">Cónyuge (opcional)</span>'+
     '<input type="text" class="field-input'+(a.conyuge?' auto-filled':'')+'" placeholder="RUIZ, Juan" value="'+(a.conyuge||'')+'" oninput="sFld(archF,\''+id+'\',\'conyuge\',this.value,gNomF,\'rf_\')"></div>'+
     (nf?'<div class="preview-name">Nombre final:<span class="pname">'+nf+'</span></div>':'')+
     '</div>'+
-    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarF(\''+id+'\')">ð¤ Analizar</button>':'')+
+    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarF(\''+id+'\')">🤖 Analizar</button>':'')+
     '</div>';
   lista.appendChild(div);
 }
@@ -491,28 +491,28 @@ async function analizarF(id){
 }
 async function analizarTodosF(){
   const p=archF.filter(a=>a.status==='pending'||a.status==='error');
-  const btn=document.getElementById('btnF');btn.disabled=true;btn.textContent='â³ '+p.length+'...';
+  const btn=document.getElementById('btnF');btn.disabled=true;btn.textContent='⏳ '+p.length+'...';
   for(const a of p)await analizarF(a.id);
-  btn.disabled=false;btn.textContent='ð¤ Analizar todos con IA';
+  btn.disabled=false;btn.textContent='🤖 Analizar todos con IA';
 }
 async function descargarF(){
   const l=archF.filter(a=>a.status==='done'&&gNomF(a));
   if(!l.length){alert('Primero analiza.');return;}
   for(const a of l){await dl(a.file,gNomF(a));a.status='renamed';renderF(a.id);await pausa(200);}
 }
-function clearF(){if(!confirm('Â¿Limpiar?'))return;archF.length=0;document.getElementById('list0').innerHTML='';uiF();}
-function gNomF(a){if(!a.titular)return null;const c=a.conyuge?' Â· '+a.conyuge:'';return a.tipo==='renta'?'Renta 2025_'+a.titular+c+'.pdf':'DF_'+a.titular+c+'_R2025.pdf';}
+function clearF(){if(!confirm('¿Limpiar?'))return;archF.length=0;document.getElementById('list0').innerHTML='';uiF();}
+function gNomF(a){if(!a.titular)return null;const c=a.conyuge?' · '+a.conyuge:'';return a.tipo==='renta'?'Renta 2025_'+a.titular+c+'.pdf':'DF_'+a.titular+c+'_R2025.pdf';}
 
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
 // IDENTIDAD
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
 const archIS=[],paresI=[];
 let modoI='simple',slotCb=null;
-const SYS_I=`Eres un asistente en documentos de identidad espaÃ±oles y europeos.
+const SYS_I=`Eres un asistente en documentos de identidad españoles y europeos.
 Responde SOLO con JSON sin backticks:
 {"tipo":"DNI"|"NIE"|"TIE"|"PAS","nombre":"APELLIDO1 APELLIDO2 Nombre"}
-DNI=doc nacional espaÃ±ol,NIE=certificado registro extranjero papel,TIE=tarjeta residencia plÃ¡stica,PAS=pasaporte.
-Apellidos MAYÃSCULAS + Nombre inicial mayÃºscula.`;
+DNI=doc nacional español,NIE=certificado registro extranjero papel,TIE=tarjeta residencia plástica,PAS=pasaporte.
+Apellidos MAYÚSCULAS + Nombre inicial mayúscula.`;
 const USR_I='Tipo de documento y nombre completo del titular.';
 
 (()=>{
@@ -535,17 +535,17 @@ function renderIS(id){
   const div=document.createElement('div');div.className='file-row';div.id='ri_'+id;
   div.innerHTML='<div class="file-original"><span class="fname">'+a.file.name+'</span>'+
     '<select class="field-select" style="margin-top:4px" onchange="sTipoIS(\''+id+'\',this.value)">'+
-    '<option value=""'+(a.tipo?'':' selected')+'>â Tipo â</option>'+
-    '<option value="DNI"'+(a.tipo==='DNI'?' selected':'')+'>ðªª DNI</option>'+
-    '<option value="NIE"'+(a.tipo==='NIE'?' selected':'')+'>ð NIE</option>'+
-    '<option value="TIE"'+(a.tipo==='TIE'?' selected':'')+'>ð¦ TIE</option>'+
-    '<option value="PAS"'+(a.tipo==='PAS'?' selected':'')+'>ð Pasaporte</option>'+
+    '<option value=""'+(a.tipo?'':' selected')+'>— Tipo —</option>'+
+    '<option value="DNI"'+(a.tipo==='DNI'?' selected':'')+'>🪪 DNI</option>'+
+    '<option value="NIE"'+(a.tipo==='NIE'?' selected':'')+'>📄 NIE</option>'+
+    '<option value="TIE"'+(a.tipo==='TIE'?' selected':'')+'>🟦 TIE</option>'+
+    '<option value="PAS"'+(a.tipo==='PAS'?' selected':'')+'>📕 Pasaporte</option>'+
     '</select></div>'+
     '<div class="field-group"><span class="field-label">Nombre del titular</span>'+
     '<input type="text" class="field-input'+(a.nombre?' auto-filled':'')+'" placeholder="GARCIA LOPEZ Maria" value="'+a.nombre+'" oninput="sFldI(\''+id+'\',this.value)">'+
     (nf?'<div class="preview-name">Nombre final:<span class="pname">'+nf+'</span></div>':'')+
     '</div>'+
-    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarIS(\''+id+'\')">ð¤ Analizar</button>':'')+
+    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarIS(\''+id+'\')">🤖 Analizar</button>':'')+
     '</div>';
   document.getElementById('list1').appendChild(div);
 }
@@ -559,9 +559,9 @@ async function analizarIS(id){
   catch(e){alert('Error: '+e.message);a.status='error';}
   renderIS(id);
 }
-async function analizarTodosIS(){const p=archIS.filter(a=>a.status==='pending'||a.status==='error');const btn=document.getElementById('btnIS');btn.disabled=true;btn.textContent='â³ '+p.length+'...';for(const a of p)await analizarIS(a.id);btn.disabled=false;btn.textContent='ð¤ Analizar todos con IA';}
+async function analizarTodosIS(){const p=archIS.filter(a=>a.status==='pending'||a.status==='error');const btn=document.getElementById('btnIS');btn.disabled=true;btn.textContent='⏳ '+p.length+'...';for(const a of p)await analizarIS(a.id);btn.disabled=false;btn.textContent='🤖 Analizar todos con IA';}
 async function descargarIS(){const l=archIS.filter(a=>a.status==='done'&&gNomI(a));if(!l.length){alert('Primero analiza.');return;}for(const a of l){await dl(a.file,gNomI(a));a.status='renamed';renderIS(a.id);await pausa(200);}}
-function clearIS(){if(!confirm('Â¿Limpiar?'))return;archIS.length=0;document.getElementById('list1').innerHTML='';uiIS();}
+function clearIS(){if(!confirm('¿Limpiar?'))return;archIS.length=0;document.getElementById('list1').innerHTML='';uiIS();}
 function gNomI(a){return(a.tipo&&a.nombre)?a.tipo+'_'+a.nombre+'.pdf':null;}
 
 // Pares doble cara
@@ -571,21 +571,21 @@ function renderPar(id){
   const old=document.getElementById('par_'+id);if(old)old.remove();
   const idx=paresI.indexOf(p)+1;const nf=gNomI(p);
   const div=document.createElement('div');div.className='pair-card';div.id='par_'+id;
-  div.innerHTML='<div class="pair-card-header"><span class="pair-num">'+idx+'</span>Documento nÂº '+idx+
-    '<button onclick="elimPar(\''+id+'\')" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--red);font-size:.8rem">â</button></div>'+
+  div.innerHTML='<div class="pair-card-header"><span class="pair-num">'+idx+'</span>Documento nº '+idx+
+    '<button onclick="elimPar(\''+id+'\')" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--red);font-size:.8rem">✕</button></div>'+
     '<div class="pair-card-body">'+
     '<div class="cara-slot'+(p.fileA?' filled':'')+'" onclick="elegirSlot(\''+id+'\',\'A\')">'+
-    (p.fileA?'<button class="btn-clear-slot" onclick="limpSlot(event,\''+id+'\',\'A\')">â</button><span class="slot-label">Cara A â</span><span class="slot-icon">â</span><span class="slot-fname">'+p.fileA.name+'</span>':
-    '<span class="slot-label">Cara A</span><span class="slot-icon">ð</span><span style="font-size:.72rem">Clic para seleccionar</span>')+'</div>'+
+    (p.fileA?'<button class="btn-clear-slot" onclick="limpSlot(event,\''+id+'\',\'A\')">✕</button><span class="slot-label">Cara A ✓</span><span class="slot-icon">✅</span><span class="slot-fname">'+p.fileA.name+'</span>':
+    '<span class="slot-label">Cara A</span><span class="slot-icon">📄</span><span style="font-size:.72rem">Clic para seleccionar</span>')+'</div>'+
     '<div class="cara-slot'+(p.fileB?' filled':'')+'" onclick="elegirSlot(\''+id+'\',\'B\')">'+
-    (p.fileB?'<button class="btn-clear-slot" onclick="limpSlot(event,\''+id+'\',\'B\')">â</button><span class="slot-label">Cara B â</span><span class="slot-icon">â</span><span class="slot-fname">'+p.fileB.name+'</span>':
-    '<span class="slot-label">Cara B (opcional)</span><span class="slot-icon">ð</span><span style="font-size:.72rem">Clic para seleccionar</span>')+'</div>'+
+    (p.fileB?'<button class="btn-clear-slot" onclick="limpSlot(event,\''+id+'\',\'B\')">✕</button><span class="slot-label">Cara B ✓</span><span class="slot-icon">✅</span><span class="slot-fname">'+p.fileB.name+'</span>':
+    '<span class="slot-label">Cara B (opcional)</span><span class="slot-icon">📄</span><span style="font-size:.72rem">Clic para seleccionar</span>')+'</div>'+
     '<div class="pair-names-col">'+
-    '<select class="field-select" onchange="sTipoP(\''+id+'\',this.value)"><option value=""'+(p.tipo?'':' selected')+'>â Tipo â</option><option value="DNI"'+(p.tipo==='DNI'?' selected':'')+'>ðªª DNI</option><option value="NIE"'+(p.tipo==='NIE'?' selected':'')+'>ð NIE</option><option value="TIE"'+(p.tipo==='TIE'?' selected':'')+'>ð¦ TIE</option><option value="PAS"'+(p.tipo==='PAS'?' selected':'')+'>ð Pasaporte</option></select>'+
+    '<select class="field-select" onchange="sTipoP(\''+id+'\',this.value)"><option value=""'+(p.tipo?'':' selected')+'>— Tipo —</option><option value="DNI"'+(p.tipo==='DNI'?' selected':'')+'>🪪 DNI</option><option value="NIE"'+(p.tipo==='NIE'?' selected':'')+'>📄 NIE</option><option value="TIE"'+(p.tipo==='TIE'?' selected':'')+'>🟦 TIE</option><option value="PAS"'+(p.tipo==='PAS'?' selected':'')+'>📕 Pasaporte</option></select>'+
     '<input type="text" class="field-input'+(p.nombre?' auto-filled':'')+'" placeholder="GARCIA LOPEZ Maria" value="'+p.nombre+'" oninput="sFldP(\''+id+'\',this.value)">'+
-    (nf?'<div class="preview-name">â<span class="pname">'+nf+'</span></div>':'')+
+    (nf?'<div class="preview-name">→<span class="pname">'+nf+'</span></div>':'')+
     '</div>'+
-    '<div class="pair-status-col">'+badge(p.status)+(p.status==='pending'||p.status==='error'?'<button class="btn-analyze" onclick="analizarID(\''+id+'\')"'+(p.fileA?'':' disabled')+'>ð¤ Analizar</button>':'')+
+    '<div class="pair-status-col">'+badge(p.status)+(p.status==='pending'||p.status==='error'?'<button class="btn-analyze" onclick="analizarID(\''+id+'\')"'+(p.fileA?'':' disabled')+'>🤖 Analizar</button>':'')+
     '</div></div>';
   area.appendChild(div);
 }
@@ -594,9 +594,9 @@ document.getElementById('slotInput').addEventListener('change',function(){if(thi
 function limpSlot(e,parId,cara){e.stopPropagation();const p=paresI.find(x=>x.id===parId);if(cara==='A')p.fileA=null;else p.fileB=null;p.status='pending';renderPar(parId);}
 function elimPar(id){const idx=paresI.findIndex(x=>x.id===id);if(idx>-1)paresI.splice(idx,1);const el=document.getElementById('par_'+id);if(el)el.remove();if(!paresI.length)document.getElementById('dobleAcc').style.display='none';}
 function sTipoP(id,t){paresI.find(x=>x.id===id).tipo=t;renderPar(id);}
-function sFldP(id,v){const p=paresI.find(x=>x.id===id);p.nombre=v;const nf=gNomI(p);const pv=document.querySelector('#par_'+id+' .preview-name');if(pv&&nf)pv.innerHTML='â<span class="pname">'+nf+'</span>';}
+function sFldP(id,v){const p=paresI.find(x=>x.id===id);p.nombre=v;const nf=gNomI(p);const pv=document.querySelector('#par_'+id+' .preview-name');if(pv&&nf)pv.innerHTML='→<span class="pname">'+nf+'</span>';}
 async function analizarID(id){const p=paresI.find(x=>x.id===id);if(!p.fileA)return;p.status='analyzing';renderPar(id);try{const r=await llamarIA(p.fileA,SYS_I,USR_I);p.tipo=r.tipo||p.tipo;p.nombre=r.nombre||'';p.status='done';}catch(e){alert('Error: '+e.message);p.status='error';}renderPar(id);}
-async function analizarTodosID(){const pe=paresI.filter(p=>(p.status==='pending'||p.status==='error')&&p.fileA);const btn=document.getElementById('btnID');btn.disabled=true;btn.textContent='â³ '+pe.length+'...';for(const p of pe)await analizarID(p.id);btn.disabled=false;btn.textContent='ð¤ Analizar todos con IA';}
+async function analizarTodosID(){const pe=paresI.filter(p=>(p.status==='pending'||p.status==='error')&&p.fileA);const btn=document.getElementById('btnID');btn.disabled=true;btn.textContent='⏳ '+pe.length+'...';for(const p of pe)await analizarID(p.id);btn.disabled=false;btn.textContent='🤖 Analizar todos con IA';}
 async function descargarID(){
   const l=paresI.filter(p=>p.status==='done'&&p.nombre&&p.tipo&&p.fileA);
   if(!l.length){alert('Primero analiza.');return;}
@@ -614,16 +614,16 @@ async function unirPDFs(fA,fB){
   return new Blob([await doc.save()],{type:'application/pdf'});
 }
 
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
 // ESCRITURAS
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
 const archE=[];
-const TIPOS_E=["Compraventa","Herencia","DonaciÃ³n","Hipoteca","CancelaciÃ³n hipoteca","Poder notarial","RevocaciÃ³n poder","ConstituciÃ³n sociedad","DisoluciÃ³n sociedad","Capitulaciones matrimoniales","Testamento","Acta notarial","SegregaciÃ³n","AgrupaciÃ³n","DeclaraciÃ³n obra nueva","DivisiÃ³n horizontal","Usufructo","Permuta","Arrendamiento","Otro..."];
-const SYS_E=`Eres un asistente especializado en escrituras notariales espaÃ±olas.
+const TIPOS_E=["Compraventa","Herencia","Donación","Hipoteca","Cancelación hipoteca","Poder notarial","Revocación poder","Constitución sociedad","Disolución sociedad","Capitulaciones matrimoniales","Testamento","Acta notarial","Segregación","Agrupación","Declaración obra nueva","División horizontal","Usufructo","Permuta","Arrendamiento","Otro..."];
+const SYS_E=`Eres un asistente especializado en escrituras notariales españolas.
 Responde SOLO con JSON sin backticks:
-{"protocolo":"nÃºmero protocolo solo dÃ­gitos","anio":"aÃ±o 4 dÃ­gitos","tipo":"tipo de escritura conciso","nombre":"Apellido1 Apellido2 Nombre del implicado principal"}
-Compraventaâcomprador, Herenciaâcausante/heredero, Hipotecaâhipotecante. VacÃ­o si no encuentras.`;
-const USR_E='Extrae protocolo, aÃ±o, tipo de escritura y nombre del implicado principal.';
+{"protocolo":"número protocolo solo dígitos","anio":"año 4 dígitos","tipo":"tipo de escritura conciso","nombre":"Apellido1 Apellido2 Nombre del implicado principal"}
+Compraventa→comprador, Herencia→causante/heredero, Hipoteca→hipotecante. Vacío si no encuentras.`;
+const USR_E='Extrae protocolo, año, tipo de escritura y nombre del implicado principal.';
 
 (()=>{
   const dz=document.getElementById('dz2'),fi=document.getElementById('fi2');
@@ -646,14 +646,14 @@ function renderE(id){
   div.id='re_'+id;
   div.innerHTML='<div class="file-original"><span class="fname">'+a.file.name+'</span></div>'+
     '<div><div class="fields-grid">'+
-    '<div class="field-group"><span class="field-label">NÂº Protocolo</span><input type="text" class="field-input'+(a.protocolo?' auto-filled':'')+'" placeholder="12345" value="'+a.protocolo+'" oninput="sFldE(\''+id+'\',\'protocolo\',this.value)"></div>'+
-    '<div class="field-group"><span class="field-label">AÃ±o</span><input type="text" class="field-input'+(a.anio?' auto-filled':'')+'" placeholder="2025" value="'+a.anio+'" maxlength="4" oninput="sFldE(\''+id+'\',\'anio\',this.value)"></div>'+
-    '<div class="field-group"><span class="field-label">Tipo escritura</span><select class="field-select" onchange="sTipoE(\''+id+'\',this.value)"><option value="">â Seleccionar â</option>'+opts+'</select>'+
+    '<div class="field-group"><span class="field-label">Nº Protocolo</span><input type="text" class="field-input'+(a.protocolo?' auto-filled':'')+'" placeholder="12345" value="'+a.protocolo+'" oninput="sFldE(\''+id+'\',\'protocolo\',this.value)"></div>'+
+    '<div class="field-group"><span class="field-label">Año</span><input type="text" class="field-input'+(a.anio?' auto-filled':'')+'" placeholder="2025" value="'+a.anio+'" maxlength="4" oninput="sFldE(\''+id+'\',\'anio\',this.value)"></div>'+
+    '<div class="field-group"><span class="field-label">Tipo escritura</span><select class="field-select" onchange="sTipoE(\''+id+'\',this.value)"><option value="">— Seleccionar —</option>'+opts+'</select>'+
     '<input type="text" class="field-input tipo-custom'+(a.tipo==='Otro...'?' visible':'')+'" placeholder="Escribe el tipo..." value="'+a.tipoCustom+'" oninput="sFldE(\''+id+'\',\'tipoCustom\',this.value)" id="ec_'+id+'"></div>'+
     '<div class="field-group"><span class="field-label">Nombre implicado</span><input type="text" class="field-input'+(a.nombre?' auto-filled':'')+'" placeholder="Garcia Lopez Maria" value="'+a.nombre+'" oninput="sFldE(\''+id+'\',\'nombre\',this.value)"></div>'+
     (nf?'<div class="preview-name" style="grid-column:1/-1">Nombre final:<span class="pname">'+nf+'</span></div>':'')+
     '</div></div>'+
-    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarE(\''+id+'\')">ð¤ Analizar</button>':'')+
+    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarE(\''+id+'\')">🤖 Analizar</button>':'')+
     '</div>';
   document.getElementById('list2').appendChild(div);
 }
@@ -679,20 +679,20 @@ async function analizarE(id){
   }catch(e){alert('Error: '+e.message);a.status='error';}
   renderE(id);
 }
-async function analizarTodosE(){const p=archE.filter(a=>a.status==='pending'||a.status==='error');const btn=document.getElementById('btnE');btn.disabled=true;btn.textContent='â³ '+p.length+'...';for(const a of p)await analizarE(a.id);btn.disabled=false;btn.textContent='ð¤ Analizar todos con IA';}
+async function analizarTodosE(){const p=archE.filter(a=>a.status==='pending'||a.status==='error');const btn=document.getElementById('btnE');btn.disabled=true;btn.textContent='⏳ '+p.length+'...';for(const a of p)await analizarE(a.id);btn.disabled=false;btn.textContent='🤖 Analizar todos con IA';}
 async function descargarE(){const l=archE.filter(a=>a.status==='done'&&gNomE(a));if(!l.length){alert('Primero analiza.');return;}for(const a of l){await dl(a.file,gNomE(a));a.status='renamed';renderE(a.id);await pausa(200);}}
-function clearE(){if(!confirm('Â¿Limpiar?'))return;archE.length=0;document.getElementById('list2').innerHTML='';uiE();}
+function clearE(){if(!confirm('¿Limpiar?'))return;archE.length=0;document.getElementById('list2').innerHTML='';uiE();}
 function gNomE(a){const tf=a.tipo==='Otro...'?a.tipoCustom:a.tipo;const parts=[a.protocolo,a.anio,tf,a.nombre].filter(Boolean);return parts.length>=2?parts.join('_')+'.pdf':null;}
 
-// âââââââââââââââââââââââââââââââââââââââ
-// VEHÃCULOS
-// âââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════
+// VEHÍCULOS
+// ═══════════════════════════════════════
 const archV=[];
-const SYS_V=`Eres un asistente en documentos de vehÃ­culos espaÃ±oles.
+const SYS_V=`Eres un asistente en documentos de vehículos españoles.
 Responde SOLO con JSON sin backticks:
-{"matricula":"SIN guiones ni espacios MAYÃSCULAS","tipo":"FT"(ficha tÃ©cnica ITV datos tara/MMA/potencia) o "PC"(permiso circulaciÃ³n DGT propietario),"marca":"marca y modelo solo para FT","titular":"nombre titular solo para PC"}
-VacÃ­o si no encuentras.`;
-const USR_V='Extrae matrÃ­cula, tipo de documento, marca/modelo y titular.';
+{"matricula":"SIN guiones ni espacios MAYÚSCULAS","tipo":"FT"(ficha técnica ITV datos tara/MMA/potencia) o "PC"(permiso circulación DGT propietario),"marca":"marca y modelo solo para FT","titular":"nombre titular solo para PC"}
+Vacío si no encuentras.`;
+const USR_V='Extrae matrícula, tipo de documento, marca/modelo y titular.';
 
 (()=>{
   const dz=document.getElementById('dz3'),fi=document.getElementById('fi3');
@@ -710,21 +710,21 @@ function renderV(id){
   const old=document.getElementById('rv_'+id);if(old)old.remove();
   const nf=gNomV(a);
   const extLbl=a.tipo==='FT'?'Marca y modelo':a.tipo==='PC'?'Nombre del titular':'Marca / Titular';
-  const extPh=a.tipo==='FT'?'Seat Ibiza':a.tipo==='PC'?'Garcia Lopez Maria':'â';
+  const extPh=a.tipo==='FT'?'Seat Ibiza':a.tipo==='PC'?'Garcia Lopez Maria':'—';
   const div=document.createElement('div');div.className='file-row';div.id='rv_'+id;
   div.innerHTML='<div class="file-original"><span class="fname">'+a.file.name+'</span></div>'+
     '<div class="fields-col">'+
     '<div class="fields-row">'+
-    '<div class="field-group" style="flex:0 0 105px"><span class="field-label">MatrÃ­cula</span>'+
+    '<div class="field-group" style="flex:0 0 105px"><span class="field-label">Matrícula</span>'+
     '<input type="text" class="matricula-input'+(a.matricula?' auto-filled':'')+'" placeholder="1234ABC" value="'+a.matricula+'" oninput="sMatV(\''+id+'\',this.value)"></div>'+
     '<div class="field-group" style="flex:0 0 96px"><span class="field-label">Tipo</span>'+
-    '<div class="tipo-btns"><button class="tipo-btn'+(a.tipo==='FT'?' sel-ft':'')+'" onclick="sTipoV(\''+id+'\',\'FT\')">ð FT</button>'+
-    '<button class="tipo-btn'+(a.tipo==='PC'?' sel-pc':'')+'" onclick="sTipoV(\''+id+'\',\'PC\')">ð PC</button></div></div>'+
+    '<div class="tipo-btns"><button class="tipo-btn'+(a.tipo==='FT'?' sel-ft':'')+'" onclick="sTipoV(\''+id+'\',\'FT\')">📋 FT</button>'+
+    '<button class="tipo-btn'+(a.tipo==='PC'?' sel-pc':'')+'" onclick="sTipoV(\''+id+'\',\'PC\')">🚗 PC</button></div></div>'+
     '<div class="field-group" style="flex:1"><span class="field-label">'+extLbl+'</span>'+
     '<input type="text" class="field-input'+(a.extra?' auto-filled':'')+'" placeholder="'+extPh+'" value="'+a.extra+'" oninput="sExtraV(\''+id+'\',this.value)"></div>'+
     '</div>'+(nf?'<div class="preview-name">Nombre final:<span class="pname">'+nf+'</span></div>':'')+
     '</div>'+
-    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarV(\''+id+'\')">ð¤ Analizar</button>':'')+
+    '<div class="status-col">'+badge(a.status)+(a.status==='pending'||a.status==='error'?'<button class="btn-analyze" onclick="analizarV(\''+id+'\')">🤖 Analizar</button>':'')+
     '</div>';
   document.getElementById('list3').appendChild(div);
 }
@@ -750,9 +750,9 @@ async function analizarV(id){
   }catch(e){alert('Error: '+e.message);a.status='error';}
   renderV(id);
 }
-async function analizarTodosV(){const p=archV.filter(a=>a.status==='pending'||a.status==='error');const btn=document.getElementById('btnV');btn.disabled=true;btn.textContent='â³ '+p.length+'...';for(const a of p)await analizarV(a.id);btn.disabled=false;btn.textContent='ð¤ Analizar todos con IA';}
+async function analizarTodosV(){const p=archV.filter(a=>a.status==='pending'||a.status==='error');const btn=document.getElementById('btnV');btn.disabled=true;btn.textContent='⏳ '+p.length+'...';for(const a of p)await analizarV(a.id);btn.disabled=false;btn.textContent='🤖 Analizar todos con IA';}
 async function descargarV(){const l=archV.filter(a=>a.status==='done'&&gNomV(a));if(!l.length){alert('Primero analiza.');return;}for(const a of l){await dl(a.file,gNomV(a));a.status='renamed';renderV(a.id);await pausa(200);}}
-function clearV(){if(!confirm('Â¿Limpiar?'))return;archV.length=0;document.getElementById('list3').innerHTML='';uiV();}
+function clearV(){if(!confirm('¿Limpiar?'))return;archV.length=0;document.getElementById('list3').innerHTML='';uiV();}
 function gNomV(a){if(!a.matricula||!a.tipo)return null;return a.matricula+'_'+a.tipo+(a.extra?'-'+a.extra:'')+'.pdf';}
 
 </script>
