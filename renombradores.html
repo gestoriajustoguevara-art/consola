@@ -199,9 +199,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
   <div class="cfg-row">
     <div class="cfg-group"><label class="cfg-label">IA a usar</label>
       <select id="cfgProveedor" class="cfg-select" onchange="onCfgChange()">
+        <option value="openai">🟠 OpenAI GPT-4o (recomendado)</option>
         <option value="gemini">🟢 Gemini (gratuito)</option>
         <option value="claude">🔵 Claude (de pago)</option>
       </select>
+    </div>
+    <div class="cfg-group" style="flex:2"><label class="cfg-label">Clave OpenAI — platform.openai.com</label>
+      <input type="password" id="cfgOpenai" class="cfg-input" placeholder="sk-proj-..." oninput="onCfgChange()">
     </div>
     <div class="cfg-group" style="flex:2"><label class="cfg-label">Clave Gemini — aistudio.google.com</label>
       <input type="password" id="cfgGemini" class="cfg-input" placeholder="AIza..." oninput="onCfgChange()">
@@ -363,27 +367,30 @@ function setTab(n) {
 // MÓDULO IA COMPARTIDO
 // ═══════════════════════════════════════
 let cfg;
-try{cfg = JSON.parse(localStorage.getItem('gestoria_ia_cfg')||'{"proveedor":"gemini","gemini":"","claude":""}');}
-catch(e){cfg={proveedor:'gemini',gemini:'',claude:''};}
+try{cfg = JSON.parse(localStorage.getItem('gestoria_ia_cfg')||'{"proveedor":"openai","openai":"","gemini":"","claude":""}');}
+catch(e){cfg={proveedor:'openai',openai:'',gemini:'',claude:''};}
 
 function saveCfg(){try{localStorage.setItem('gestoria_ia_cfg',JSON.stringify(cfg));}catch(e){}}
 
 function renderCfgPanel(){
   document.getElementById('cfgProveedor').value=cfg.proveedor;
+  document.getElementById('cfgOpenai').value=cfg.openai||'';
   document.getElementById('cfgGemini').value=cfg.gemini;
   document.getElementById('cfgClaude').value=cfg.claude;
   updateBadge();
 }
 
 function updateBadge(){
-  const clave=cfg.proveedor==='gemini'?cfg.gemini:cfg.claude;
+  const clave=cfg.proveedor==='openai'?cfg.openai:cfg.proveedor==='gemini'?cfg.gemini:cfg.claude;
   const b=document.getElementById('iaBadge');
-  if(clave){b.textContent=cfg.proveedor==='gemini'?'✅ Gemini activo':'✅ Claude activo';b.className='ia-badge ok';}
+  const nombres={openai:'OpenAI GPT-4o',gemini:'Gemini',claude:'Claude'};
+  if(clave){b.textContent='✅ '+nombres[cfg.proveedor]+' activo';b.className='ia-badge ok';}
   else{b.textContent='⚠️ Sin clave API';b.className='ia-badge warn';}
 }
 
 function onCfgChange(){
   cfg.proveedor=document.getElementById('cfgProveedor').value;
+  cfg.openai=document.getElementById('cfgOpenai').value.trim();
   cfg.gemini=document.getElementById('cfgGemini').value.trim();
   cfg.claude=document.getElementById('cfgClaude').value.trim();
   saveCfg();updateBadge();
@@ -396,7 +403,21 @@ function toggleCfg(){
 
 async function llamarIA(file,sys,usr){
   const b64=await toBase64(file);
-  return cfg.proveedor==='gemini'?await iaGemini(b64,sys,usr):await iaClaude(b64,sys,usr);
+  if(cfg.proveedor==='openai')return await iaOpenAI(b64,sys,usr);
+  if(cfg.proveedor==='gemini')return await iaGemini(b64,sys,usr);
+  return await iaClaude(b64,sys,usr);
+}
+
+async function iaOpenAI(b64,sys,usr){
+  if(!cfg.openai)throw new Error('Falta la clave OpenAI. Pulsa \u2699\uFE0F Configurar IA.');
+  const r=await fetch('https://api.openai.com/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.openai},
+    body:JSON.stringify({model:'gpt-4o',messages:[{role:'system',content:sys},{role:'user',content:[{type:'image_url',image_url:{url:'data:application/pdf;base64,'+b64,detail:'high'}},{type:'text',text:usr}]}],temperature:0.1,max_tokens:600})
+  });
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return JSON.parse((d.choices?.[0]?.message?.content||'').replace(/```json|```/g,'').trim());
 }
 
 async function iaGemini(b64,sys,usr){
