@@ -6,6 +6,8 @@
 <title>🗂 Caja de Renombradores · Mari</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <style>
 :root{
   --navy:#1a2744;--gold:#c9992a;--gold-light:#f0d080;
@@ -408,12 +410,24 @@ async function llamarIA(file,sys,usr){
   return await iaClaude(b64,sys,usr);
 }
 
+async function pdfToImage(b64pdf){
+  const bytes=Uint8Array.from(atob(b64pdf),c=>c.charCodeAt(0));
+  const pdf=await pdfjsLib.getDocument({data:bytes}).promise;
+  const page=await pdf.getPage(1);
+  const vp=page.getViewport({scale:2});
+  const canvas=document.createElement('canvas');
+  canvas.width=vp.width;canvas.height=vp.height;
+  await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+  return canvas.toDataURL('image/png').split(',')[1];
+}
+
 async function iaOpenAI(b64,sys,usr){
   if(!cfg.openai)throw new Error('Falta la clave OpenAI. Pulsa \u2699\uFE0F Configurar IA.');
+  const imgB64=await pdfToImage(b64);
   const r=await fetch('https://api.openai.com/v1/chat/completions',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.openai},
-    body:JSON.stringify({model:'gpt-4o',messages:[{role:'system',content:sys},{role:'user',content:[{type:'image_url',image_url:{url:'data:application/pdf;base64,'+b64,detail:'high'}},{type:'text',text:usr}]}],temperature:0.1,max_tokens:600})
+    body:JSON.stringify({model:'gpt-4o',messages:[{role:'system',content:sys},{role:'user',content:[{type:'image_url',image_url:{url:'data:image/png;base64,'+imgB64,detail:'high'}},{type:'text',text:usr}]}],temperature:0.1,max_tokens:600})
   });
   const d=await r.json();
   if(d.error)throw new Error(d.error.message);
