@@ -676,7 +676,7 @@ window.addEventListener('load', () => {
     Notification.requestPermission();
   }
   cargarTablon();
-  setInterval(cargarTablon, 60000);
+  setInterval(cargarTablon, 300000);
 });
 
 const URL_VTO     = 'https://script.google.com/macros/s/AKfycbzSpWjKLGxRp4CR4miJk4uP7b6CNmmToqGrleJXbEtQX9T6BdRyLkMReE5lBGxVk5i9SA/exec';
@@ -769,7 +769,7 @@ async function cargarContadorMaestro() {
 
 cargarTodo();
 cargarContadorMaestro();
-setInterval(cargarTodo, 15*60*1000);
+setInterval(cargarTodo, 2*60*60*1000);
 </script>
 </body>
 </html>
