@@ -249,6 +249,76 @@ footer {
   .cards,.tools-cards { grid-template-columns:1fr 1fr; }
   .apps-panel { padding:18px 16px; }
 }
+
+/* CAMPANA TABLÓN */
+.bell-wrap { position:relative; cursor:pointer; }
+.bell-btn {
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; cursor:pointer; transition:background 0.2s;
+  position:relative;
+}
+.bell-btn:hover { background:rgba(255,255,255,0.18); }
+.bell-badge {
+  position:absolute; top:-5px; right:-5px;
+  min-width:18px; height:18px; border-radius:9px;
+  background:#ef4444; color:#fff;
+  font-size:10px; font-weight:700;
+  display:none; align-items:center; justify-content:center;
+  border:2px solid var(--navy); padding:0 3px;
+}
+.bell-badge.visible { display:flex; }
+.bell-dropdown {
+  display:none; position:absolute; top:44px; right:0;
+  width:300px; background:var(--white);
+  border:1px solid var(--border); border-radius:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.15);
+  z-index:100; overflow:hidden;
+}
+.bell-dropdown.open { display:block; }
+.bell-drop-head {
+  padding:10px 14px; font-size:11px; font-weight:600;
+  color:var(--text2); background:var(--bg);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.bell-drop-usuario {
+  font-family:'DM Mono',monospace; font-size:9px;
+  letter-spacing:1px; text-transform:uppercase;
+  color:var(--gold); margin-left:8px;
+}
+.bell-nota {
+  padding:10px 14px; border-bottom:1px solid #f1f5f9;
+  display:flex; gap:8px; align-items:flex-start;
+}
+.bell-nota-dot { width:7px; height:7px; border-radius:50%; background:#ef4444; flex-shrink:0; margin-top:5px; }
+.bell-nota-dot.leida { background:#94a3b8; }
+.bell-nota-de { font-size:11px; color:var(--text2); }
+.bell-nota-de strong { color:var(--text); font-weight:600; }
+.bell-nota-txt { font-size:12px; color:var(--text); margin-top:1px; line-height:1.4; }
+.bell-nota-hora { font-size:10px; color:var(--gray); margin-top:2px; }
+.bell-drop-vacio { padding:20px; text-align:center; font-size:12px; color:var(--gray); }
+.bell-drop-footer {
+  padding:9px 14px; text-align:center;
+  font-size:11px; font-weight:600; color:var(--navy);
+  background:var(--bg); cursor:pointer;
+  border-top:1px solid var(--border);
+  transition:background 0.15s;
+}
+.bell-drop-footer:hover { background:var(--border); }
+
+/* SELECTOR USUARIO EN HEADER */
+.user-select-wrap { display:flex; align-items:center; gap:8px; }
+.user-select-label { font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:1px; text-transform:uppercase; }
+.user-select {
+  font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600;
+  background:rgba(255,255,255,0.08); color:white;
+  border:1px solid rgba(255,255,255,0.2); border-radius:20px;
+  padding:4px 10px; cursor:pointer; outline:none;
+}
+.user-select option { background:#0b1829; color:white; }
 </style>
 </head>
 <body>
@@ -260,9 +330,31 @@ footer {
     <span class="logo-dot">·</span>
     <span class="logo-sub">Panel interno</span>
   </div>
-  <div class="header-meta">
-    <div class="header-date" id="fecha"></div>
-    <div class="header-cole">Colegiado nº 493 · Francisco José Justo Guevara</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="user-select-wrap">
+      <span class="user-select-label">Soy</span>
+      <select class="user-select" id="selectUsuario" onchange="cambiarUsuario(this.value)">
+        <option value="Mari">Mari</option>
+        <option value="Paco">Paco</option>
+        <option value="Sara">Sara</option>
+        <option value="MJ">MJ</option>
+      </select>
+    </div>
+    <div class="bell-wrap" id="bellWrap">
+      <div class="bell-btn" onclick="toggleBell()">🔔<div class="bell-badge" id="bellBadge"></div></div>
+      <div class="bell-dropdown" id="bellDropdown">
+        <div class="bell-drop-head">
+          <span>Notas para ti</span>
+          <span class="bell-drop-usuario" id="bellUsuario"></span>
+        </div>
+        <div id="bellLista"></div>
+        <div class="bell-drop-footer" onclick="abrirTablon()">Ver tablón completo →</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="header-date" id="fecha"></div>
+      <div class="header-cole">Colegiado nº 493 · Francisco José Justo Guevara</div>
+    </div>
   </div>
 </header>
 
@@ -409,7 +501,7 @@ footer {
           <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
         </a>
 
-        <a class="card" href="tablon-postits.html" target="_blank">
+        <a class="card" href="https://script.google.com/macros/s/AKfycbyDB9urGsNrr_uF4mqDaon7ErUC-AzzI7JxTmZTqlVmqatH2cf2axUfmihHZbMBj5yEbg/exec" target="_blank">
           <div class="card-bar" style="background:var(--tools)"></div>
           <div class="card-icon">📌</div>
           <div class="card-name">Tablón de Avisos</div>
@@ -467,6 +559,126 @@ footer {
 </footer>
 
 <script>
+
+const URL_TABLON = 'https://script.google.com/macros/s/AKfycbwM58ymvextMi7N-4-hLKF_zflh89e2ESPqxKXFQUr1FwTi-InXco63NF5LW7g7Yv97Xg/exec';
+let usuarioActual = localStorage.getItem('consola_usuario') || 'Paco';
+let notasVistas = JSON.parse(localStorage.getItem('notas_vistas') || '[]');
+let todasNotasTablon = [];
+
+function cambiarUsuario(u) {
+  usuarioActual = u;
+  localStorage.setItem('consola_usuario', u);
+  document.getElementById('bellUsuario').textContent = u;
+  renderBell();
+}
+
+function toggleBell() {
+  const dd = document.getElementById('bellDropdown');
+  dd.classList.toggle('open');
+  if (dd.classList.contains('open')) {
+    // Marcar como vistas las notas que ahora se muestran
+    const misNotas = getNotasParaMi();
+    misNotas.forEach(n => { if (!notasVistas.includes(n.id)) notasVistas.push(n.id); });
+    localStorage.setItem('notas_vistas', JSON.stringify(notasVistas));
+    renderBell();
+  }
+}
+
+// Cerrar al hacer clic fuera
+document.addEventListener('click', e => {
+  if (!document.getElementById('bellWrap').contains(e.target)) {
+    document.getElementById('bellDropdown').classList.remove('open');
+  }
+});
+
+function abrirTablon() {
+  window.open('tablon-postits.html', '_blank');
+  document.getElementById('bellDropdown').classList.remove('open');
+}
+
+function getNotasParaMi() {
+  return todasNotasTablon.filter(n =>
+    n.para === usuarioActual || n.para === 'TODOS' || n.de === usuarioActual
+  );
+}
+
+function renderBell() {
+  const notas = getNotasParaMi();
+  const sinVer = notas.filter(n => n.para === usuarioActual && n.de !== usuarioActual && !notasVistas.includes(n.id));
+  
+  // Badge
+  const badge = document.getElementById('bellBadge');
+  badge.textContent = sinVer.length;
+  badge.classList.toggle('visible', sinVer.length > 0);
+  
+  // Usuario
+  document.getElementById('bellUsuario').textContent = usuarioActual;
+  
+  // Lista
+  const lista = document.getElementById('bellLista');
+  if (!notas.length) {
+    lista.innerHTML = '<div class="bell-drop-vacio">No hay notas</div>';
+    return;
+  }
+  
+  // Mostrar: primero las no vistas, luego el resto (máx 6)
+  const ordenadas = [...notas].sort((a,b) => {
+    const aVista = notasVistas.includes(a.id);
+    const bVista = notasVistas.includes(b.id);
+    if (aVista && !bVista) return 1;
+    if (!aVista && bVista) return -1;
+    return 0;
+  }).slice(0, 6);
+  
+  lista.innerHTML = ordenadas.map(n => {
+    const leida = notasVistas.includes(n.id) || n.de === usuarioActual;
+    const esMia = n.de === usuarioActual;
+    const leidaTag = esMia ? (notasVistas.includes(n.id) ? ' <span style="color:#16a34a;font-size:10px;">✓ leída</span>' : '') : '';
+    const quien = esMia ? `Tú → <strong>${n.para === 'TODOS' ? 'Todos' : n.para}</strong>` : `<strong>${n.de}</strong>`;
+    return `<div class="bell-nota">
+      <div class="bell-nota-dot ${leida ? 'leida' : ''}"></div>
+      <div>
+        <div class="bell-nota-de">${quien}${leidaTag}</div>
+        ${n.asunto ? `<div style="font-size:10px;font-weight:600;color:var(--text2)">${n.asunto}</div>` : ''}
+        <div class="bell-nota-txt">${n.texto}</div>
+        <div class="bell-nota-hora">${n.fecha || ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function cargarTablon() {
+  try {
+    const r = await fetch(URL_TABLON + '?action=get');
+    const data = await r.json();
+    const nuevas = (data.notas || []).reverse();
+    
+    // Detectar notas nuevas para mí (para notificación)
+    const idsAnteriores = todasNotasTablon.map(n => n.id);
+    nuevas.forEach(n => {
+      if (n.para === usuarioActual && n.de !== usuarioActual && !idsAnteriores.includes(n.id) && !notasVistas.includes(n.id)) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('📌 Nueva nota de ' + n.de, { body: n.texto });
+        }
+      }
+    });
+    
+    todasNotasTablon = nuevas;
+    renderBell();
+  } catch(e) {}
+}
+
+// Init
+window.addEventListener('load', () => {
+  const sel = document.getElementById('selectUsuario');
+  sel.value = usuarioActual;
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+  cargarTablon();
+  setInterval(cargarTablon, 60000);
+});
+
 const URL_VTO     = 'https://script.google.com/macros/s/AKfycbzSpWjKLGxRp4CR4miJk4uP7b6CNmmToqGrleJXbEtQX9T6BdRyLkMReE5lBGxVk5i9SA/exec';
 const URL_MAESTRO = 'https://script.google.com/macros/s/AKfycbyVXypuTXm5tRvbP-xJu06q7ZsJ2qve790lCyvBLJpr6jTckZhc6wZ4kX5XPhVOWCVrww/exec';
 

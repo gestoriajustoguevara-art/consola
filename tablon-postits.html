@@ -584,6 +584,7 @@ let todasLasNotas = [];
 
 // ========== INIT ==========
 window.onload = () => {
+  pedirPermisoNotificaciones();
   document.querySelector(`[data-user="${usuarioActual}"]`)?.classList.add('active');
   document.querySelectorAll('.user-btn').forEach(b => {
     if (b.dataset.user !== usuarioActual) b.classList.remove('active');
@@ -600,6 +601,7 @@ window.onload = () => {
 function setUsuario(u) {
   usuarioActual = u;
   localStorage.setItem('tablon_usuario', u);
+  idsLeidos = JSON.parse(localStorage.getItem('notas_leidas_' + u) || '[]');
   document.querySelectorAll('.user-btn').forEach(b => b.classList.toggle('active', b.dataset.user === u));
   actualizarVista();
 }
@@ -687,7 +689,15 @@ async function cargarNotas() {
   try {
     const r = await fetch(CONFIG.url + '?action=get', { mode: 'cors' });
     const data = await r.json();
-    todasLasNotas = (data.notas || []).reverse();
+    const nuevas = (data.notas || []).reverse();
+    // Detectar notas nuevas dirigidas a mí
+    const idsAnteriores = todasLasNotas.map(n => n.id);
+    nuevas.forEach(n => {
+      if (n.para === usuarioActual && n.de !== usuarioActual && !idsAnteriores.includes(n.id)) {
+        notificarNotaPersonal(n);
+      }
+    });
+    todasLasNotas = nuevas;
     actualizarVista();
   } catch(e) {
     // Silencioso si falla al recargar
@@ -703,34 +713,62 @@ function actualizarVista() {
   const secParaMi = document.getElementById('seccion-para-mi');
   secParaMi.style.display = paraM.length > 0 ? 'block' : 'none';
   document.getElementById('nombre-para-mi').textContent = usuarioActual;
-  renderGrid('grid-para-mi', paraM);
+  renderGrid('grid-para-mi', paraM, true); // true = marcar leídas
 
   // Tablón común (para TODOS)
   const comun = todasLasNotas.filter(n => n.para === 'TODOS');
-  renderGrid('grid-comun', comun);
+  renderGrid('grid-comun', comun, false);
 
-  // Mis notas propias (yo me las envié a mí mismo o están en vista "mis notas")
-  const propias = todasLasNotas.filter(n => n.de === usuarioActual && n.para === usuarioActual);
+  // Notas que yo he enviado (para ver si están leídas)
+  const enviadas = todasLasNotas.filter(n => n.de === usuarioActual && n.para !== usuarioActual);
   const secPropias = document.getElementById('seccion-mis-notas');
-  secPropias.style.display = (esMisNotas && propias.length > 0) ? 'block' : 'none';
-  renderGrid('grid-propias', propias);
+  secPropias.style.display = (esMisNotas && enviadas.length > 0) ? 'block' : 'none';
+  renderGrid('grid-propias', enviadas, false);
 }
 
 // ========== RENDER POST-ITS ==========
-function renderGrid(gridId, notas) {
+// IDs leídos guardados en localStorage
+let idsLeidos = JSON.parse(localStorage.getItem('notas_leidas_' + usuarioActual) || '[]');
+
+function marcarLeida(id) {
+  if (!idsLeidos.includes(id)) {
+    idsLeidos.push(id);
+    localStorage.setItem('notas_leidas_' + usuarioActual, JSON.stringify(idsLeidos));
+    // Notificar al Apps Script que está leída
+    if (CONFIG.url) {
+      fetch(CONFIG.url, {
+        method: 'POST', mode: 'no-cors', headers: {},
+        body: JSON.stringify({ action: 'leida', id: id, por: usuarioActual })
+      }).catch(() => {});
+    }
+  }
+}
+
+function renderGrid(gridId, notas, marcarComoLeidas) {
   const grid = document.getElementById(gridId);
   if (!notas.length) {
     grid.innerHTML = '<div class="vacio" style="grid-column:1/-1">¡Ninguna nota por aquí! 🌱</div>';
     return;
   }
+  if (marcarComoLeidas) {
+    notas.forEach(n => marcarLeida(n.id));
+  }
   const rots = [-2, -1, 0, 1, 2, -1.5, 1.5];
   grid.innerHTML = notas.map((n, i) => {
     const rot = rots[i % rots.length];
     const paraLabel = n.para === 'TODOS' ? '🌍 Todos' : `👤 ${n.para}`;
+    // Si es nota enviada por mí, mostrar si está leída
+    const esEnviada = n.de === usuarioActual && n.para !== usuarioActual;
+    const leida = (n.leida && n.leida !== '') || idsLeidos.includes(n.id + '_leida');
+    const leidaTag = esEnviada
+      ? (leida
+          ? `<span style="font-size:0.7rem;color:#16a34a;font-weight:700;">✓✓ leída</span>`
+          : `<span style="font-size:0.7rem;color:#94a3b8;">✓ enviada</span>`)
+      : '';
     return `
       <div class="postit" style="background:${n.color || '#FFE566'}; --rot:${rot}deg">
         <button class="btn-tachar" onclick="eliminarNota('${n.id}', this.closest('.postit'))" title="Marcar como vista">✓</button>
-        <div class="postit-para">${paraLabel}</div>
+        <div class="postit-para">${paraLabel} ${leidaTag}</div>
         ${n.asunto ? `<div style="font-size:0.8rem;font-weight:800;color:rgba(0,0,0,0.6)">${n.asunto}</div>` : ''}
         <div class="postit-texto">${n.texto}</div>
         <div class="postit-footer">
@@ -776,6 +814,24 @@ function toggleInstrucciones() {
   el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
+// ========== NOTIFICACIONES ==========
+function pedirPermisoNotificaciones() {
+  if ("Notification" in window && Notification.permission === "default") {
+    Notification.requestPermission();
+  }
+}
+
+function notificarNotaPersonal(nota) {
+  if ("Notification" in window && Notification.permission === "granted") {
+    new Notification("📌 Nueva nota para ti", {
+      body: "De: " + nota.de + (nota.asunto ? " · " + nota.asunto : "") + "
+" + nota.texto,
+      icon: "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/push_pin/default/48px.svg"
+    });
+  }
+}
+
+// ========== REFRESCO AUTOMÁTICO
 // Refresco automático cada 60 segundos
 setInterval(() => { if (CONFIG.url) cargarNotas(); }, 60000);
 </script>
