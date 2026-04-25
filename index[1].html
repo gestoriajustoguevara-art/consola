@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestoría Justo Guevara · Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --navy:       #0b1829;
+  --gold:       #e0a020;
+  --white:      #ffffff;
+  --bg:         #f0f4f8;
+  --border:     #e2e8f0;
+  --gray:       #94a3b8;
+  --text:       #1e293b;
+  --text2:      #475569;
+
+  --trafico:    #ef4444;
+  --juridico:   #3b82f6;
+  --extranjeria:#10b981;
+  --fiscal:     #8b5cf6;
+  --escrituras: #f59e0b;
+  --admin:      #0ea5e9;
+  --tools:      #64748b;
+
+  --caja:       #d97706;
+  --caja-bg:    #fffbeb;
+  --caja-border:#fbbf24;
+  --caja-glow:  rgba(217,119,6,0.15);
+
+  --maestro:    #0891b2;
+  --maestro-bg: #f0fbff;
+  --maestro-bdr:#67e8f9;
+  --maestro-glow:rgba(8,145,178,0.12);
+}
+
+html, body { height:100%; }
+body {
+  background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  display: flex; flex-direction: column; min-height:100vh;
+}
+
+/* HEADER */
+header {
+  background: var(--navy);
+  padding: 0 32px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  z-index: 10; position: relative;
+}
+.logo { display:flex; align-items:center; gap:14px; }
+.logo-hex {
+  width:38px; height:38px; background:var(--gold);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-hex span { font-family:'Bebas Neue',sans-serif; font-size:15px; color:var(--navy); }
+.logo-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2.5px; color:var(--white); }
+.logo-dot  { color:var(--gold); margin:0 8px; opacity:.5; }
+.logo-sub  { font-size:10px; color:rgba(255,255,255,0.32); letter-spacing:2.5px; text-transform:uppercase; }
+.header-meta { text-align:right; }
+.header-date { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,0.28); letter-spacing:.5px; }
+.header-cole { font-size:10px; color:var(--gold); margin-top:2px; opacity:0.75; }
+
+/* LAYOUT */
+.body-wrap {
+  flex:1; display:grid;
+  grid-template-columns: 1fr 380px;
+  overflow: hidden;
+}
+
+/* PANEL APPS */
+.apps-panel {
+  padding: 28px 28px 28px 32px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 28px;
+}
+
+/* SECCIÓN */
+.section { display:flex; flex-direction:column; gap:14px; }
+.section-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.section-stripe { width:4px; height:30px; border-radius:3px; flex-shrink:0; }
+.section-label { font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:3.5px; color:var(--text2); white-space:nowrap; }
+.section-line { flex:1; height:1px; background:var(--border); min-width:20px; }
+
+/* GRID */
+.cards       { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.tools-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; }
+
+/* TARJETA BASE */
+.card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 22px 20px 18px;
+  text-decoration: none; color: var(--text);
+  display: flex; flex-direction: column; gap: 8px;
+  transition: all 0.22s ease;
+  border: 1.5px solid var(--border);
+  position: relative; overflow: hidden;
+  cursor: pointer; min-height: 152px;
+}
+.card-bar { position:absolute; top:0; left:0; right:0; height:5px; border-radius:18px 18px 0 0; }
+.card-icon { font-size:34px; line-height:1; margin-bottom:2px; margin-top:6px; }
+.card-name { font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:1.5px; line-height:1.2; }
+.card-desc { font-size:11.5px; color:var(--gray); line-height:1.55; flex:1; }
+.card-footer { display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
+.badge { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:1px; text-transform:uppercase; padding:3px 8px; border-radius:20px; }
+.badge-green { background:#dcfce7; color:#15803d; }
+.badge-amber { background:#fef3c7; color:#b45309; }
+.card-arrow  { font-size:16px; color:var(--border); transition:color 0.2s; }
+.card:hover { transform:translateY(-4px); box-shadow:0 10px 32px rgba(0,0,0,0.1); border-color:transparent; }
+.card:hover .card-arrow { color:var(--gold); }
+
+/* CAJA CONTABLE — ESPECIAL */
+.card-caja {
+  background: var(--caja-bg);
+  border: 2px solid var(--caja-border);
+  border-radius: 18px;
+  padding: 22px 20px 18px;
+  text-decoration: none; color: var(--text);
+  display: flex; flex-direction: column; gap: 8px;
+  transition: all 0.22s ease;
+  position: relative; overflow: hidden;
+  cursor: pointer; min-height: 152px;
+  box-shadow: 0 4px 20px var(--caja-glow);
+}
+.card-caja::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--caja), #f59e0b);
+  border-radius:18px 18px 0 0;
+}
+.card-caja .card-name { color: var(--caja); }
+.card-caja .card-desc { color:#92400e; opacity:.75; }
+.card-caja .card-arrow { font-size:16px; color:var(--caja-border); transition:color 0.2s; }
+.card-caja:hover { transform:translateY(-4px); box-shadow:0 12px 36px var(--caja-glow); border-color:var(--caja); }
+.card-caja:hover .card-arrow { color:var(--caja); }
+.badge-caja { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:1px; text-transform:uppercase; padding:3px 8px; border-radius:20px; background:var(--caja); color:#fff; font-weight:600; }
+.caja-tag {
+  position:absolute; top:13px; right:13px;
+  background:var(--caja); color:#fff;
+  font-family:'DM Mono',monospace; font-size:8px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 9px; border-radius:20px;
+}
+
+/* CLIENTESMAESTRO — ESPECIAL */
+.card-maestro {
+  background: var(--maestro-bg);
+  border: 2px solid var(--maestro-bdr);
+  border-radius: 18px;
+  padding: 22px 20px 18px;
+  text-decoration: none; color: var(--text);
+  display: flex; flex-direction: column; gap: 8px;
+  transition: all 0.22s ease;
+  position: relative; overflow: hidden;
+  cursor: pointer; min-height: 152px;
+  box-shadow: 0 4px 20px var(--maestro-glow);
+}
+.card-maestro::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--maestro), #06b6d4);
+  border-radius:18px 18px 0 0;
+}
+.card-maestro .card-name { color: var(--maestro); }
+.card-maestro .card-desc { color:#164e63; opacity:.75; }
+.card-maestro .card-arrow { font-size:16px; color:var(--maestro-bdr); transition:color 0.2s; }
+.card-maestro:hover { transform:translateY(-4px); box-shadow:0 12px 36px var(--maestro-glow); border-color:var(--maestro); }
+.card-maestro:hover .card-arrow { color:var(--maestro); }
+.badge-maestro { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:1px; text-transform:uppercase; padding:3px 8px; border-radius:20px; background:var(--maestro); color:#fff; font-weight:600; }
+.maestro-tag {
+  position:absolute; top:13px; right:13px;
+  background:var(--maestro); color:#fff;
+  font-family:'DM Mono',monospace; font-size:8px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 9px; border-radius:20px;
+}
+
+/* CALENDARIO */
+.cal-panel {
+  background: var(--white);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.cal-header {
+  background: var(--navy); padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between; flex-shrink:0;
+}
+.cal-title { font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:2.5px; color:var(--white); }
+.cal-meta  { display:flex; align-items:center; gap:8px; }
+.cal-time  { font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,0.28); }
+.btn-refresh { background:none; border:none; cursor:pointer; color:rgba(255,255,255,0.38); font-size:15px; padding:3px 5px; transition:color 0.2s; border-radius:4px; }
+.btn-refresh:hover { color:var(--gold); }
+
+.cal-stats { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--border); flex-shrink:0; }
+.cal-stat { padding:13px 8px; text-align:center; border-right:1px solid var(--border); }
+.cal-stat:last-child { border-right:none; }
+.cal-stat-num { font-family:'Bebas Neue',sans-serif; font-size:30px; line-height:1; }
+.cal-stat-lbl { font-size:9px; color:var(--gray); text-transform:uppercase; letter-spacing:.5px; margin-top:2px; }
+
+.cal-list { flex:1; overflow-y:auto; padding:4px 0; }
+.cal-loading { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:12px; color:var(--gray); font-size:12px; }
+.spinner { width:28px; height:28px; border:3px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.cal-group-label { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); padding:10px 18px 4px; background:var(--bg); border-bottom:1px solid var(--border); }
+.cal-item { display:flex; align-items:flex-start; gap:10px; padding:10px 18px; border-bottom:1px solid #f1f5f9; transition:background 0.15s; }
+.cal-item:hover { background:#f8fafc; }
+.cal-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+.cal-info { flex:1; min-width:0; }
+.cal-title-item { font-size:11.5px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cal-sub { font-size:10px; color:var(--gray); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cal-days { font-family:'DM Mono',monospace; font-size:9px; font-weight:700; padding:3px 7px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+.d-red   { background:#fee2e2; color:#dc2626; }
+.d-amber { background:#fef3c7; color:#d97706; }
+.d-green { background:#dcfce7; color:#16a34a; }
+.d-gray  { background:#f1f5f9; color:#64748b; }
+.cal-empty { font-size:11px; color:var(--gray); text-align:center; padding:40px 20px; font-style:italic; }
+
+/* FOOTER */
+footer {
+  background:var(--navy); padding:8px 32px;
+  display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+}
+.footer-l { font-size:10px; color:rgba(255,255,255,0.2); }
+.footer-r { font-family:'DM Mono',monospace; font-size:9px; color:var(--gold); opacity:.42; }
+
+/* ANIMACIONES */
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);} }
+.section { animation:fadeUp 0.35s ease both; }
+.section:nth-child(1){animation-delay:0.04s;}
+.section:nth-child(2){animation-delay:0.09s;}
+.section:nth-child(3){animation-delay:0.14s;}
+.section:nth-child(4){animation-delay:0.19s;}
+
+/* RESPONSIVE */
+@media(max-width:1100px) {
+  .body-wrap { grid-template-columns:1fr; }
+  .cal-panel { border-left:none; border-top:1px solid var(--border); max-height:360px; }
+}
+@media(max-width:640px) {
+  .cards,.tools-cards { grid-template-columns:1fr 1fr; }
+  .apps-panel { padding:18px 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-hex"><span>JG</span></div>
+    <span class="logo-name">Gestoría Justo Guevara</span>
+    <span class="logo-dot">·</span>
+    <span class="logo-sub">Panel interno</span>
+  </div>
+  <div class="header-meta">
+    <div class="header-date" id="fecha"></div>
+    <div class="header-cole">Colegiado nº 493 · Francisco José Justo Guevara</div>
+  </div>
+</header>
+
+<div class="body-wrap">
+
+  <!-- APPS -->
+  <div class="apps-panel">
+
+    <!-- SECCIÓN 1: Gestión principal -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-stripe" style="background:var(--trafico)"></div>
+        <span class="section-label">Tráfico</span>
+        <div class="section-line"></div>
+        <div class="section-stripe" style="background:var(--juridico);margin-left:12px;"></div>
+        <span class="section-label">Jurídico</span>
+        <div class="section-line"></div>
+        <div class="section-stripe" style="background:var(--extranjeria);margin-left:12px;"></div>
+        <span class="section-label">Extranjería</span>
+        <div class="section-line"></div>
+        <div class="section-stripe" style="background:var(--fiscal);margin-left:12px;"></div>
+        <span class="section-label">Fiscal · Rentas · Becas</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/gestoria-trafico/" target="_blank">
+          <div class="card-bar" style="background:var(--trafico)"></div>
+          <div class="card-icon">🚗</div>
+          <div class="card-name">Gestoría de Vehículos</div>
+          <div class="card-desc">Transferencias, matriculaciones, bajas, canjes y fichas técnicas.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/JURIDICO/" target="_blank">
+          <div class="card-bar" style="background:var(--juridico)"></div>
+          <div class="card-icon">⚖️</div>
+          <div class="card-name">Gestor Jurídico</div>
+          <div class="card-desc">Expedientes judiciales, cartas de encargo y panel de vistas.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/extranjeria/" target="_blank">
+          <div class="card-bar" style="background:var(--extranjeria)"></div>
+          <div class="card-icon">🌍</div>
+          <div class="card-name">Gestión de Extranjería</div>
+          <div class="card-desc">Expedientes, tasas, plazos automáticos y checklist de documentos.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/fiscal/" target="_blank">
+          <div class="card-bar" style="background:var(--fiscal)"></div>
+          <div class="card-icon">💼</div>
+          <div class="card-name">Asesoría Fiscal, Rentas y Becas</div>
+          <div class="card-desc">Expedientes fiscales, renta, becas y estado de facturación.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: Escrituras + Admin -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-stripe" style="background:var(--escrituras)"></div>
+        <span class="section-label">Escrituras y Herencias</span>
+        <div class="section-line"></div>
+        <div class="section-stripe" style="background:var(--admin);margin-left:12px;"></div>
+        <span class="section-label">Administración</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/gestion-escrituras/" target="_blank">
+          <div class="card-bar" style="background:var(--escrituras)"></div>
+          <div class="card-icon">🏠</div>
+          <div class="card-name">App de Escrituras</div>
+          <div class="card-desc">Expedientes notariales, vencimientos, inmuebles y facturación.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/gestion-escrituras/instancia%20privada.html" target="_blank">
+          <div class="card-bar" style="background:var(--escrituras)"></div>
+          <div class="card-icon">📝</div>
+          <div class="card-name">Generador Instancia Mod. 660</div>
+          <div class="card-desc">Escrito ISD ante la Oficina Liquidadora de Almería.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span></div>
+        </a>
+
+        <!-- CAJA CONTABLE DESTACADA -->
+        <a class="card-caja" href="https://script.google.com/macros/s/AKfycbyqcdK7x4_a1Dhmhnau3gc1h664Z520YId7gjnlxr0Y21P8k0Q2rf6SvDoO3K8oSOCoww/exec" target="_blank">
+          <div class="caja-tag">💰 Caja</div>
+          <div class="card-icon">🧾</div>
+          <div class="card-name">Caja Contable</div>
+          <div class="card-desc">Movimientos por persona, saldos, arrears y cierres mensuales.</div>
+          <div class="card-footer"><span class="badge-caja">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/facturacion/" target="_blank">
+          <div class="card-bar" style="background:var(--admin)"></div>
+          <div class="card-icon">📊</div>
+          <div class="card-name">Facturación</div>
+          <div class="card-desc">Facturas, proformas y control de cobros de la gestoría.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: Herramientas + ClientesMAESTRO -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-stripe" style="background:var(--tools)"></div>
+        <span class="section-label">Herramientas de Apoyo</span>
+        <div class="section-line"></div>
+        <div class="section-stripe" style="background:var(--maestro);margin-left:12px;"></div>
+        <span class="section-label">Base de Clientes</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="tools-cards">
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/expedientes/" target="_blank">
+          <div class="card-bar" style="background:var(--tools)"></div>
+          <div class="card-icon">📦</div>
+          <div class="card-name">Seguimiento Expedientes QR</div>
+          <div class="card-desc">Registro de ubicación e historial con código QR.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="https://gestoriajustoguevara-art.github.io/lector-dni/" target="_blank">
+          <div class="card-bar" style="background:var(--tools)"></div>
+          <div class="card-icon">🪪</div>
+          <div class="card-name">Lector DNI / NIE</div>
+          <div class="card-desc">Lectura de DNI, NIE, TIE y Pasaporte con IA de Gemini.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        
+        <a class="card" href="renombradores.html" target="_blank">
+          <div class="card-bar" style="background:var(--tools)"></div>
+          <div class="card-icon">🏷️</div>
+          <div class="card-name">Renombradores</div>
+          <div class="card-desc">Renombrado inteligente de PDFs con IA: fiscal, identidad, escrituras y vehículos.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+        <a class="card" href="tablon-postits.html" target="_blank">
+          <div class="card-bar" style="background:var(--tools)"></div>
+          <div class="card-icon">📌</div>
+          <div class="card-name">Tablón de Avisos</div>
+          <div class="card-desc">Post-its y notas rápidas para el equipo.</div>
+          <div class="card-footer"><span class="badge badge-green">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+<!-- CLIENTESMAESTRO DESTACADA -->
+        <a class="card-maestro" href="https://gestoriajustoguevara-art.github.io/clientes-maestro/" target="_blank">
+          <div class="maestro-tag">⭐ Maestro</div>
+          <div class="card-icon">👥</div>
+          <div class="card-name">ClientesMAESTRO</div>
+          <div class="card-desc">Base de datos única de todos los clientes · <span id="maestro-count" style="font-weight:600;color:var(--maestro)">cargando...</span></div>
+          <div class="card-footer"><span class="badge-maestro">Activo</span><span class="card-arrow">→</span></div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CALENDARIO -->
+  <div class="cal-panel">
+    <div class="cal-header">
+      <span class="cal-title">📅 Vencimientos</span>
+      <div class="cal-meta">
+        <span class="cal-time" id="calTime">—</span>
+        <button class="btn-refresh" onclick="cargarTodo()" title="Actualizar">↻</button>
+      </div>
+    </div>
+    <div class="cal-stats">
+      <div class="cal-stat">
+        <div class="cal-stat-num" id="statU" style="color:#dc2626">—</div>
+        <div class="cal-stat-lbl">🔴 Urgente</div>
+      </div>
+      <div class="cal-stat">
+        <div class="cal-stat-num" id="statS" style="color:#d97706">—</div>
+        <div class="cal-stat-lbl">🟡 Esta semana</div>
+      </div>
+      <div class="cal-stat">
+        <div class="cal-stat-num" id="statM" style="color:#16a34a">—</div>
+        <div class="cal-stat-lbl">🟢 Este mes</div>
+      </div>
+    </div>
+    <div class="cal-list" id="calList">
+      <div class="cal-loading"><div class="spinner"></div><span>Cargando vencimientos...</span></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-l">Uso exclusivo del equipo interno · Gestoría Justo Guevara</span>
+  <span class="footer-r">Panel v3.0 · 2026</span>
+</footer>
+
+<script>
+const URL_VTO     = 'https://script.google.com/macros/s/AKfycbzSpWjKLGxRp4CR4miJk4uP7b6CNmmToqGrleJXbEtQX9T6BdRyLkMReE5lBGxVk5i9SA/exec';
+const URL_MAESTRO = 'https://script.google.com/macros/s/AKfycbyVXypuTXm5tRvbP-xJu06q7ZsJ2qve790lCyvBLJpr6jTckZhc6wZ4kX5XPhVOWCVrww/exec';
+
+const APP_COLOR = {
+  'Escrituras':'#f59e0b','Jurídico':'#3b82f6','Extranjería':'#10b981',
+  'Fiscal':'#8b5cf6','Tráfico':'#ef4444','Admin':'#0ea5e9',
+};
+
+document.getElementById('fecha').textContent =
+  new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).toUpperCase();
+
+function diasHasta(f) {
+  if (!f || f===''||f==='—') return null;
+  try {
+    const s=String(f); let d;
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)){const p=s.slice(0,10).split('-');d=new Date(+p[0],+p[1]-1,+p[2]);}
+    else d=new Date(s);
+    if(isNaN(d.getTime()))return null;
+    const hoy=new Date();hoy.setHours(0,0,0,0);
+    return Math.round((d-hoy)/86400000);
+  }catch(e){return null;}
+}
+function clDias(n){if(n===null)return 'd-gray';if(n<0)return 'd-red';if(n<=3)return 'd-red';if(n<=7)return 'd-amber';if(n<=30)return 'd-green';return 'd-gray';}
+function txDias(n){if(n===null)return '—';if(n<0)return`Hace ${Math.abs(n)}d`;if(n===0)return'¡HOY!';if(n===1)return'Mañana';return`${n}d`;}
+function fD(f){if(!f)return'—';const s=String(f);const p=s.slice(0,10).split('-');if(p.length===3&&p[0].length===4)return`${p[2]}/${p[1]}/${p[0].slice(-2)}`;return s;}
+function actualizarHora(){const t=new Date();document.getElementById('calTime').textContent=`${t.getHours()}:${String(t.getMinutes()).padStart(2,'0')}`;}
+
+async function cargarTodo() {
+  document.getElementById('calList').innerHTML=`<div class="cal-loading"><div class="spinner"></div><span>Cargando...</span></div>`;
+  try {
+    const r=await fetch(`${URL_VTO}?action=leer`);
+    const data=await r.json();
+    const rows=Array.isArray(data)?data:[];
+    const items=rows
+      .filter(r=>(r.estado||'').toLowerCase()!=='completado')
+      .map(r=>({...r,dias:diasHasta(r.fecha)}))
+      .filter(r=>r.dias!==null&&r.dias>=-6&&r.dias<=90)
+      .sort((a,b)=>a.dias-b.dias);
+
+    document.getElementById('statU').textContent=items.filter(i=>i.dias<=3).length;
+    document.getElementById('statS').textContent=items.filter(i=>i.dias>3&&i.dias<=7).length;
+    document.getElementById('statM').textContent=items.filter(i=>i.dias>7&&i.dias<=30).length;
+
+    if(!items.length){document.getElementById('calList').innerHTML=`<div class="cal-empty">✅ Sin vencimientos próximos</div>`;actualizarHora();return;}
+
+    const grupos=[
+      {label:'🔴 Vencidos',       items:items.filter(i=>i.dias<0)},
+      {label:'🔥 Hoy · 1-3 días', items:items.filter(i=>i.dias>=0&&i.dias<=3)},
+      {label:'⚡ Esta semana',     items:items.filter(i=>i.dias>3&&i.dias<=7)},
+      {label:'📅 Este mes',        items:items.filter(i=>i.dias>7&&i.dias<=30)},
+      {label:'🗓️ Más adelante',   items:items.filter(i=>i.dias>30)},
+    ];
+
+    let html='';
+    grupos.forEach(g=>{
+      if(!g.items.length)return;
+      html+=`<div class="cal-group-label">${g.label}</div>`;
+      g.items.forEach(i=>{
+        const color=APP_COLOR[i.app]||'#64748b';
+        html+=`<div class="cal-item">
+          <div class="cal-dot" style="background:${color}"></div>
+          <div class="cal-info">
+            <div class="cal-title-item">${i.expediente||'—'} · ${i.cliente||'—'}</div>
+            <div class="cal-sub">${i.app||''} · ${i.tipo||''} · ${fD(i.fecha)}${i.observaciones?' · '+i.observaciones:''}</div>
+          </div>
+          <div class="cal-days ${clDias(i.dias)}">${txDias(i.dias)}</div>
+        </div>`;
+      });
+    });
+    document.getElementById('calList').innerHTML=html;
+    actualizarHora();
+  } catch(e) {
+    document.getElementById('calList').innerHTML=`<div class="cal-empty">⚠️ Error al conectar con el Sheets.</div>`;
+  }
+}
+
+async function cargarContadorMaestro() {
+  try {
+    const r=await fetch(URL_MAESTRO+'?action=contar');
+    const d=await r.json();
+    const el=document.getElementById('maestro-count');
+    if(d&&d.total) el.textContent=d.total+' clientes';
+    else el.textContent='';
+  } catch(e) {
+    document.getElementById('maestro-count').textContent='';
+  }
+}
+
+cargarTodo();
+cargarContadorMaestro();
+setInterval(cargarTodo, 15*60*1000);
+</script>
+</body>
+</html>
