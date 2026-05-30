@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valorador Catastral — Gestoría Justo Guevara</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --gold: #c9a84c;
+    --gold-light: #f0dfa0;
+    --gold-pale: #fdf8ec;
+    --white: #ffffff;
+    --gray-100: #f5f5f3;
+    --gray-200: #e8e6e0;
+    --gray-500: #8a8880;
+    --gray-700: #4a4845;
+    --green: #1a6b42;
+    --green-pale: #e8f4ee;
+    --blue-pale: #eaf1fb;
+    --blue: #185fa5;
+    --red: #9b2b2b;
+    --red-pale: #fdf0f0;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(26,39,68,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(26,39,68,0.18);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .logo-text { color: var(--white); font-size: 15px; font-weight: 500; line-height: 1.2; }
+  .logo-sub { color: var(--gold-light); font-size: 11px; font-weight: 400; }
+
+  nav { display: flex; gap: 4px; }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  nav a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+  nav a.active { color: var(--gold-light); background: rgba(201,168,76,0.15); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #2a3f6e 100%);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(201,168,76,0.04) 40px,
+      rgba(201,168,76,0.04) 41px
+    );
+  }
+  .hero-content { position: relative; max-width: 700px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.2);
+    color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.3);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 5px;
+  }
+  .tab {
+    flex: 1;
+    padding: 9px 8px;
+    border: none;
+    background: none;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab svg { width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
+  .tab:hover { color: var(--navy); background: var(--gray-100); }
+  .tab.active { background: var(--navy); color: var(--white); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title svg { width: 18px; height: 18px; color: var(--gold); }
+
+  /* ── FORM ELEMENTS ── */
+  input[type=text], input[type=number], select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 7px 11px;
+    color: var(--gray-700);
+    background: var(--white);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
+  input[type=number] { width: 100px; }
+  input[type=text] { flex: 1; }
+  select { flex: 1; min-width: 0; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    color: var(--gray-700);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--gray-100); border-color: var(--gray-500); }
+  .btn-add {
+    background: var(--green-pale);
+    border-color: #a3d4bb;
+    color: var(--green);
+  }
+  .btn-add:hover { background: #d0ebda; }
+  .btn-danger {
+    background: var(--red-pale);
+    border-color: #e0b0b0;
+    color: var(--red);
+    padding: 6px 10px;
+  }
+  .btn-danger:hover { background: #f9e0e0; }
+  .btn-primary {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+    padding: 10px 20px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .btn-primary:hover { background: #253a6e; }
+
+  /* ── PRICE ROWS ── */
+  .price-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .price-row:last-child { border-bottom: none; }
+  .price-name { flex: 1; font-size: 14px; color: var(--gray-700); }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 6px;
+  }
+  .badge-cultivo { background: var(--green-pale); color: var(--green); }
+  .badge-const { background: var(--blue-pale); color: var(--blue); }
+  .unit-tag { font-size: 12px; color: var(--gray-500); white-space: nowrap; }
+
+  /* ── ADD ROW ── */
+  .add-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--gray-200);
+  }
+
+  /* ── FINCA LINES ── */
+  .finca-line {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .finca-line:last-child { border-bottom: none; }
+  .num-badge {
+    width: 24px; height: 24px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── RESULTADO ── */
+  .result-box {
+    background: linear-gradient(135deg, var(--navy) 0%, #253a6e 100%);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    color: var(--white);
+  }
+  .result-label { font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .result-total { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--gold); margin-bottom: 1rem; }
+  .result-divider { border: none; border-top: 1px solid rgba(255,255,255,0.15); margin: 1rem 0; }
+  .result-line { font-size: 13px; color: rgba(255,255,255,0.75); padding: 3px 0; line-height: 1.6; }
+  .result-line b { color: var(--white); font-weight: 500; }
+
+  /* ── CONVERTER ── */
+  .conv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 560px) { .conv-grid { grid-template-columns: 1fr; } }
+  .conv-field { margin-bottom: 10px; }
+  .conv-field label { display: block; font-size: 12px; font-weight: 500; color: var(--gray-500); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .conv-result-box {
+    background: var(--gold-pale);
+    border: 1px solid var(--gold-light);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .conv-m2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--navy); }
+  .conv-detail { font-size: 12px; color: var(--gray-500); margin-top: 6px; line-height: 1.8; }
+  .ref-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+  .ref-table td { padding: 6px 8px; border-bottom: 1px solid var(--gray-100); }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table td:first-child { color: var(--gray-500); }
+  .ref-table td:last-child { font-weight: 500; color: var(--navy); text-align: right; }
+
+  /* ── EMPTY STATE ── */
+  .empty { font-size: 13px; color: var(--gray-500); padding: 8px 0; font-style: italic; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-500);
+    padding: 2rem;
+    border-top: 1px solid var(--gray-200);
+    margin-top: 2rem;
+  }
+  footer a { color: var(--navy); text-decoration: none; }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--blue-pale);
+    border: 1px solid #b5d4f4;
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--blue);
+    margin-top: 10px;
+  }
+
+  /* ── FINCA ID ── */
+  .finca-id-card {
+    background: var(--gold-pale);
+    border: 1px solid var(--gold-light);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+  .finca-id-card label { font-size: 12px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+  .finca-id-card input { flex: 1; min-width: 180px; border-color: var(--gold-light); }
+
+  /* ── BTN PRINT ── */
+  .btn-print {
+    background: var(--gold-pale);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .btn-print:hover { background: var(--gold-light); }
+
+  /* ── ACCIÓN BUTTONS ROW ── */
+  .action-row { display: flex; gap: 8px; margin-top: 4px; }
+  .action-row .btn-primary { flex: 1; margin-top: 0; }
+
+  /* ── IMPRESIÓN ── */
+  @media print {
+    header, nav, .hero, .tabs, .card-title svg,
+    .btn, .btn-primary, .btn-print, .action-row,
+    .finca-id-card, footer, .info-box, .empty,
+    #panel-precios, #panel-conv { display: none !important; }
+    body { background: white; }
+    main { padding: 0; max-width: 100%; }
+    .panel { display: block !important; }
+    #panel-valorar { display: block !important; }
+    .card { box-shadow: none; border: 1px solid #ddd; margin-bottom: 0.5rem; }
+    .result-box { background: white !important; color: black !important; border: 2px solid #1a2744; }
+    .result-total { color: #1a2744 !important; font-size: 28px; }
+    .result-label { color: #555 !important; }
+    .result-line { color: #333 !important; }
+    .result-divider { border-color: #ccc !important; }
+    .print-header { display: block !important; }
+    .num-badge { background: #1a2744 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  .print-header {
+    display: none;
+    text-align: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #1a2744;
+  }
+  .print-header h2 { font-family: 'Playfair Display', serif; font-size: 20px; color: #1a2744; }
+  .print-header p { font-size: 12px; color: #555; margin-top: 4px; }
+  .print-finca { display: none; font-size: 14px; color: #1a2744; margin-bottom: 1rem; font-weight: 600; }
+  @media print { .print-finca { display: block !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">JG</div>
+      <div>
+        <div class="logo-text">Gestoría Justo Guevara</div>
+        <div class="logo-sub">Gestor Administrativo Colegiado nº 493</div>
+      </div>
+    </a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/servicios.html">Servicios</a>
+      <a href="#" class="active">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Herramienta gratuita</div>
+    <h1>Valorador <span>Catastral</span></h1>
+    <p>Calcula el valor estimado de una finca según sus cultivos y construcciones.<br>Convierte también hectáreas, áreas y centiáreas a metros cuadrados.</p>
+  </div>
+</div>
+
+<main>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('precios', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Tabla de precios
+    </button>
+    <button class="tab" onclick="showTab('valorar', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      Valorar finca
+    </button>
+    <button class="tab" onclick="showTab('conv', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+      Convertir medidas
+    </button>
+  </div>
+
+  <!-- ═══ PRECIOS ═══ -->
+  <div id="panel-precios" class="panel active">
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Cultivos — precio por m²
+      </div>
+      <div id="lista-cultivos"></div>
+      <div class="add-row">
+        <input type="text" id="new-c-nombre" placeholder="Nombre del cultivo" style="flex:1; min-width:150px;">
+        <input type="number" id="new-c-precio" placeholder="€/m²" min="0" step="0.001" style="width:90px;">
+        <button class="btn btn-add" onclick="addCultivo()">+ Añadir</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Construcciones — precio por m²
+      </div>
+      <div id="lista-const"></div>
+      <div class="add-row">
+        <input type="text" id="new-co-nombre" placeholder="Tipo de construcción" style="flex:1; min-width:150px;">
+        <input type="number" id="new-co-precio" placeholder="€/m²" min="0" step="0.5" style="width:90px;">
+        <button class="btn btn-add" onclick="addConst()">+ Añadir</button>
+      </div>
+    </div>
+    <div class="info-box">ℹ️ Los precios se guardan automáticamente en este navegador. Actualízalos siempre que sea necesario; el cambio se aplica de inmediato en la pestaña de valoración.</div>
+  </div>
+
+  <!-- ═══ VALORAR ═══ -->
+  <div id="panel-valorar" class="panel">
+
+    <!-- Cabecera solo en impresión -->
+    <div class="print-header">
+      <h2>Gestoría Justo Guevara</h2>
+      <p>Francisco José Justo Guevara · Gestor Administrativo Colegiado nº 493 · Olula del Río (Almería)</p>
+      <p style="margin-top:6px; font-size:13px; font-weight:600;">VALORACIÓN CATASTRAL ORIENTATIVA</p>
+    </div>
+
+    <!-- Datos de la finca -->
+    <div class="finca-id-card">
+      <div style="flex:1; min-width:180px;">
+        <label>Referencia catastral</label>
+        <input type="text" id="finca-ref" placeholder="Ej: 04068A009000010000TA">
+      </div>
+      <div style="flex:1; min-width:150px;">
+        <label>Descripción / Nombre</label>
+        <input type="text" id="finca-desc" placeholder="Ej: Parcela 1, Polígono 9">
+      </div>
+      <div style="flex:1; min-width:120px;">
+        <label>Municipio</label>
+        <input type="text" id="finca-mun" placeholder="Ej: Olula del Río">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Parcelas de cultivo
+      </div>
+      <div id="lineas-cultivo"><div class="empty">Pulsa el botón para añadir una parcela.</div></div>
+      <button class="btn btn-add" onclick="addLineaCultivo()" style="margin-top:10px;">+ Añadir parcela</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        Construcciones
+      </div>
+      <div id="lineas-const"><div class="empty">Pulsa el botón para añadir una construcción.</div></div>
+      <button class="btn btn-add" onclick="addLineaConst()" style="margin-top:10px;">+ Añadir construcción</button>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-primary" onclick="calcular()">Calcular valor total →</button>
+      <button class="btn btn-print" onclick="imprimir()">🖨️ Imprimir</button>
+    </div>
+    <div class="print-finca" id="print-finca"></div>
+    <div id="resultado"></div>
+  </div>
+
+  <!-- ═══ CONVERTER ═══ -->
+  <div id="panel-conv" class="panel">
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+        Convertir superficie a m²
+      </div>
+      <div class="conv-grid">
+        <div>
+          <div class="conv-field">
+            <label>Hectáreas (ha)</label>
+            <input type="number" id="c-ha" min="0" step="any" placeholder="0" oninput="convertir()" style="width:100%;">
+          </div>
+          <div class="conv-field">
+            <label>Áreas (a)</label>
+            <input type="number" id="c-a" min="0" step="any" placeholder="0" oninput="convertir()" style="width:100%;">
+          </div>
+          <div class="conv-field">
+            <label>Centiáreas (ca)</label>
+            <input type="number" id="c-ca" min="0" step="any" placeholder="0" oninput="convertir()" style="width:100%;">
+          </div>
+          <button class="btn" onclick="limpiarConv()" style="margin-top:4px;">Limpiar</button>
+        </div>
+        <div class="conv-result-box">
+          <div style="font-size:12px; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Equivale a</div>
+          <div class="conv-m2" id="conv-m2">0 m²</div>
+          <div class="conv-detail" id="conv-detalle"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Referencia rápida
+      </div>
+      <table class="ref-table">
+        <tr><td>1 hectárea (ha)</td><td>10.000 m²</td></tr>
+        <tr><td>1 área (a)</td><td>100 m²</td></tr>
+        <tr><td>1 centiárea (ca)</td><td>1 m²</td></tr>
+        <tr><td>1 ha</td><td>100 áreas · 10.000 ca</td></tr>
+        <tr><td>1 área</td><td>100 centiáreas</td></tr>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <strong>Gestoría Justo Guevara</strong> · Francisco José Justo Guevara · Gestor Administrativo Colegiado nº 493<br>
+  Olula del Río (Almería) · <a href="mailto:trafico@gestoriajustog.es">trafico@gestoriajustog.es</a>
+  <br><br>
+  <span style="font-size:11px;">Los valores mostrados son orientativos. Para una valoración oficial diríjase a un tasador homologado.</span>
+</footer>
+
+<script>
+const KC = 'gjg_vc_cultivos';
+const KCO = 'gjg_vc_const';
+
+const defCultivos = [
+  {nombre:'Labor o labradío secano', precio:0.12},
+  {nombre:'Labor o labradío regadío', precio:0.45},
+  {nombre:'Olivar secano', precio:0.20},
+  {nombre:'Olivar regadío', precio:0.60},
+  {nombre:'Viña secano', precio:0.15},
+  {nombre:'Almendro secano', precio:0.10},
+  {nombre:'Cítricos regadío', precio:0.80},
+  {nombre:'Huerta', precio:1.20},
+  {nombre:'Pastizal', precio:0.05},
+  {nombre:'Monte bajo / matorral', precio:0.03},
+];
+const defConst = [
+  {nombre:'Vivienda', precio:350},
+  {nombre:'Nave agrícola', precio:120},
+  {nombre:'Almacén / garaje', precio:90},
+  {nombre:'Piscina', precio:200},
+  {nombre:'Patio / porche', precio:50},
+];
+
+function load(k, d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
+function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+
+let cultivos = load(KC, defCultivos);
+let consts = load(KCO, defConst);
+let lCult = [], lConst = [];
+
+function showTab(id, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+  if(id==='valorar') renderLineas();
+}
+
+// ── PRECIOS ──
+function renderPrecios(){
+  document.getElementById('lista-cultivos').innerHTML = cultivos.length ? cultivos.map((c,i)=>`
+    <div class="price-row">
+      <span class="price-name">${c.nombre}<span class="badge badge-cultivo">cultivo</span></span>
+      <input type="number" value="${c.precio}" min="0" step="0.001" style="width:90px;"
+        onchange="cultivos[${i}].precio=parseFloat(this.value)||0;save('${KC}',cultivos);">
+      <span class="unit-tag">€/m²</span>
+      <button class="btn btn-danger" onclick="cultivos.splice(${i},1);save('${KC}',cultivos);renderPrecios();">✕</button>
+    </div>`).join('') : '<div class="empty">Sin cultivos definidos.</div>';
+
+  document.getElementById('lista-const').innerHTML = consts.length ? consts.map((c,i)=>`
+    <div class="price-row">
+      <span class="price-name">${c.nombre}<span class="badge badge-const">construcción</span></span>
+      <input type="number" value="${c.precio}" min="0" step="0.5" style="width:90px;"
+        onchange="consts[${i}].precio=parseFloat(this.value)||0;save('${KCO}',consts);">
+      <span class="unit-tag">€/m²</span>
+      <button class="btn btn-danger" onclick="consts.splice(${i},1);save('${KCO}',consts);renderPrecios();">✕</button>
+    </div>`).join('') : '<div class="empty">Sin construcciones definidas.</div>';
+}
+
+function addCultivo(){
+  const n=document.getElementById('new-c-nombre').value.trim();
+  const p=parseFloat(document.getElementById('new-c-precio').value)||0;
+  if(!n) return;
+  cultivos.push({nombre:n,precio:p});
+  save(KC,cultivos);
+  document.getElementById('new-c-nombre').value='';
+  document.getElementById('new-c-precio').value='';
+  renderPrecios();
+}
+function addConst(){
+  const n=document.getElementById('new-co-nombre').value.trim();
+  const p=parseFloat(document.getElementById('new-co-precio').value)||0;
+  if(!n) return;
+  consts.push({nombre:n,precio:p});
+  save(KCO,consts);
+  document.getElementById('new-co-nombre').value='';
+  document.getElementById('new-co-precio').value='';
+  renderPrecios();
+}
+
+// ── VALORAR ──
+function opsCult(sel){ return cultivos.map((c,i)=>`<option value="${i}"${i===sel?' selected':''}>${c.nombre} (${c.precio} €/m²)</option>`).join(''); }
+function opsConst(sel){ return consts.map((c,i)=>`<option value="${i}"${i===sel?' selected':''}>${c.nombre} (${c.precio} €/m²)</option>`).join(''); }
+
+function addLineaCultivo(){ lCult.push({tipo:0,m2:''}); renderLineas(); }
+function addLineaConst(){ lConst.push({tipo:0,m2:''}); renderLineas(); }
+
+function renderLineas(){
+  const lc=document.getElementById('lineas-cultivo');
+  lc.innerHTML = lCult.length ? lCult.map((l,i)=>`
+    <div class="finca-line">
+      <div class="num-badge">${i+1}</div>
+      <select onchange="lCult[${i}].tipo=parseInt(this.value)" style="flex:2;min-width:160px;">${opsCult(l.tipo)}</select>
+      <input type="number" min="0" step="any" value="${l.m2}" placeholder="m²" style="width:90px;"
+        onchange="lCult[${i}].m2=parseFloat(this.value)||0;">
+      <span class="unit-tag">m²</span>
+      <button class="btn btn-danger" onclick="lCult.splice(${i},1);renderLineas();">✕</button>
+    </div>`).join('') : '<div class="empty">Pulsa el botón para añadir una parcela.</div>';
+
+  const lco=document.getElementById('lineas-const');
+  lco.innerHTML = lConst.length ? lConst.map((l,i)=>`
+    <div class="finca-line">
+      <div class="num-badge">${i+1}</div>
+      <select onchange="lConst[${i}].tipo=parseInt(this.value)" style="flex:2;min-width:160px;">${opsConst(l.tipo)}</select>
+      <input type="number" min="0" step="any" value="${l.m2}" placeholder="m²" style="width:90px;"
+        onchange="lConst[${i}].m2=parseFloat(this.value)||0;">
+      <span class="unit-tag">m²</span>
+      <button class="btn btn-danger" onclick="lConst.splice(${i},1);renderLineas();">✕</button>
+    </div>`).join('') : '<div class="empty">Pulsa el botón para añadir una construcción.</div>';
+}
+
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function getFincaInfo(){
+  const ref = document.getElementById('finca-ref').value.trim();
+  const desc = document.getElementById('finca-desc').value.trim();
+  const mun = document.getElementById('finca-mun').value.trim();
+  const parts = [];
+  if(ref) parts.push('Ref. catastral: ' + ref);
+  if(desc) parts.push(desc);
+  if(mun) parts.push(mun);
+  return parts.join(' · ');
+}
+
+function imprimir(){
+  const info = getFincaInfo();
+  document.getElementById('print-finca').textContent = info ? 'Finca: ' + info : '';
+  // Calcular primero si no hay resultado
+  const res = document.getElementById('resultado');
+  if(!res.querySelector('.result-box')) calcular();
+  if(!res.querySelector('.result-box')) return;
+  window.print();
+}
+
+function calcular(){
+  const lines=[];
+  let total=0;
+  lCult.forEach(l=>{
+    const c=cultivos[l.tipo]; if(!c) return;
+    const v=parseFloat(l.m2)||0; const val=v*c.precio; total+=val;
+    lines.push(`${c.nombre}: ${v.toLocaleString('es-ES')} m² × ${c.precio} €/m² = <b>${fmt(val)} €</b>`);
+  });
+  lConst.forEach(l=>{
+    const c=consts[l.tipo]; if(!c) return;
+    const v=parseFloat(l.m2)||0; const val=v*c.precio; total+=val;
+    lines.push(`${c.nombre}: ${v.toLocaleString('es-ES')} m² × ${c.precio} €/m² = <b>${fmt(val)} €</b>`);
+  });
+  if(!lines.length){
+    document.getElementById('resultado').innerHTML=`<div class="info-box" style="margin-top:10px;">⚠️ Añade al menos una parcela o construcción antes de calcular.</div>`;
+    return;
+  }
+  document.getElementById('resultado').innerHTML=`
+    <div class="result-box">
+      <div class="result-label">Valor total estimado</div>
+      <div class="result-total">${fmt(total)} €</div>
+      ${getFincaInfo() ? `<div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:-6px;margin-bottom:10px;">${getFincaInfo()}</div>` : ''}
+      <hr class="result-divider">
+      ${lines.map(l=>`<div class="result-line">${l}</div>`).join('')}
+    </div>`;
+}
+
+// ── CONVERTER ──
+function convertir(){
+  const ha=parseFloat(document.getElementById('c-ha').value)||0;
+  const a=parseFloat(document.getElementById('c-a').value)||0;
+  const ca=parseFloat(document.getElementById('c-ca').value)||0;
+  const total=ha*10000+a*100+ca;
+  document.getElementById('conv-m2').textContent=total.toLocaleString('es-ES')+' m²';
+  const parts=[];
+  if(ha) parts.push(`${ha} ha → ${(ha*10000).toLocaleString('es-ES')} m²`);
+  if(a) parts.push(`${a} a → ${(a*100).toLocaleString('es-ES')} m²`);
+  if(ca) parts.push(`${ca} ca → ${ca.toLocaleString('es-ES')} m²`);
+  document.getElementById('conv-detalle').textContent=parts.join('\n');
+}
+function limpiarConv(){
+  ['c-ha','c-a','c-ca'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('conv-m2').textContent='0 m²';
+  document.getElementById('conv-detalle').textContent='';
+}
+
+renderPrecios();
+</script>
+</body>
+</html>
